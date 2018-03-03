@@ -2,6 +2,24 @@
     font-family: Sans-Serif;
 }
 
+.js-backGround{
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.js-pageViewSplashHtml{
+    position: fixed;
+    background-image: url("logo.png"), url("paper.jpg");
+    background-size: 75vw, cover;
+}
+
 h1{
     font-size: 2em;
     font-weight: 700;
@@ -22,6 +40,44 @@ body{
     background: #efefef;
     text-align: center;
 }
+
+.buttonForm{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.js-button{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.js-startButton{
+    width: 60%;
+}
+
+.buttonBox{
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    width: 150px;
+}
+
+
+
+
+
+
+
+
+
+
 
 #wrapper{
     width: 600px;
@@ -80,3 +136,4 @@ body{
     border: 4px solid red;
     padding: 4px;
 }
+
