@@ -46,8 +46,14 @@ const generateHtml={
     instructionsHtml: function(){
         console.log('In the instructionsHtml method.');
         let pageInstructionsHtml=`
+        <div class='instructionsBox'>
+            <h1>Welcome to Ransom Note!</h1>
+            <p>This app takes text which you type in and converts it to a series of photos of letters, numerals, and punctuation.</p>
+            <p>In the Main Page (you get there by clicking the Start button) there are five text fields. Enter your text in one or more of them, then click the Continue button. A new screen will appear with your text turned to photos.</p>
+            <p>If you don't like any of the random photos selected, you can change them. Just click on a photo to get a new random photo.</p>
+            <p>When you're happy with the results, you can click on the Screen Shot button to take a picture of your ransom note text! Click the Main Page button to edit your text, or enter new text.</p>
+        </div>
         <form class="buttonForm">
-            <p>This is where the instructions will go.</p>
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
         </form>
         `;
@@ -80,12 +86,16 @@ const renderPage={
 
     showCurrentPage: function(pageToShow, userButtonText){
         console.log('In the showCurrentPage method.'); 
-        $('#js-userButton').text(userButtonText);
+        $('.js-userButton').text(userButtonText);
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInstructionsHtml').hide();
         // $('div.js-pageViewMainHtml').hide();
         // $('div.js-pageViewRansomNoteHtml').hide();
-        $(pageToShow).show();
+        if(pageToShow==='div.js-pageViewSplashHtml'){
+            $(pageToShow).show();
+        } else{
+            $(pageToShow).fadeIn('slow');
+        }        
     },
 
     splashPage: function(){
