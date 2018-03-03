@@ -20,6 +20,16 @@
     background-size: 75vw, cover;
 }
 
+.js-pageViewInstructionsHtml{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(overlay.png) repeat;
+    text-align: center;
+}
+
 h1{
     font-size: 2em;
     font-weight: 700;
@@ -59,21 +69,23 @@ body{
 }
 
 .js-instructionsButton{
-    width: 125px;
+    width: 100%;
 }
 
-.js-startButton{
-    width: 70px;
+.js-userButton{
+    width: 44%;
 }
 
 .buttonBox{
     display: block;
     margin: 0 auto;
     padding-bottom: 5px;
-    width: 150px;
+    width: 180px;
 }
 
 #wrapper{
+    position: relative;
+    display: block;
     width: 600px;
     margin: 0 auto;
     background: #fff;
@@ -101,7 +113,6 @@ body{
 
 #lightbox p{
     text-align: right;
-    /* color: #fff; */
     margin-right: 20px;
     font-size: 12px;
 }
