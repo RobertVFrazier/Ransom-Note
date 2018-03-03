@@ -45,7 +45,7 @@ body{
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .js-button{
@@ -58,14 +58,18 @@ body{
     font-weight: 700;
 }
 
+.js-instructionsButton{
+    width: 125px;
+}
+
 .js-startButton{
-    width: 60%;
+    width: 70px;
 }
 
 .buttonBox{
     display: block;
     margin: 0 auto;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     width: 150px;
 }
 
