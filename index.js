@@ -196,6 +196,11 @@ const listeners={
         console.log('In the handleUserButton method.');
         $('.js-userButton').on('click', function() {
             if(STORE.currentView==='main'){
+                STORE.line_1=document.querySelector('#js-line-1').value;
+                STORE.line_2=document.querySelector('#js-line-2').value;
+                STORE.line_3=document.querySelector('#js-line-3').value;
+                STORE.line_4=document.querySelector('#js-line-4').value;
+                STORE.line_5=document.querySelector('#js-line-5').value;
                 STORE.currentView='ransomNote';
                 renderPage.doShowPages();
             }else{
