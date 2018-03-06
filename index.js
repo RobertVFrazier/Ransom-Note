@@ -26,8 +26,8 @@ const generateHtml={
         console.log('In the doHtmlPages method.');
         this.splashHtml();
         this.instructionsHtml();
-        // this.mainHtml();
-        // this.ransomNoteHtml();
+        this.mainHtml();
+        this.ransomNoteHtml();
     },
 
     splashHtml: function(){
@@ -49,9 +49,9 @@ const generateHtml={
         <div class='instructionsBox'>
             <h1>Welcome to Ransom Note!</h1>
             <p>This app takes text which you type in and converts it to a series of photos of letters, numerals, and punctuation.</p>
-            <p>In the Main Page (you get there by clicking the Start button) there are five text fields. Enter your text in one or more of them, then click the Continue button. A new screen will appear with your text turned to photos.</p>
+            <p>In the text input page (you get there by clicking the Start button) there are five text fields. Enter your text in one or more of them, then click the Continue button. A new screen will appear with your text turned to photos.</p>
             <p>If you don't like any of the random photos selected, you can change them. Just click on a photo to get a new random photo.</p>
-            <p>When you're happy with the results, you can click on the Screen Shot button to take a picture of your ransom note text! Click the Main Page button to edit your text, or enter new text.</p>
+            <p>When you're happy with the results, you can click on the Screen Shot button to take a picture of your ransom note text! Click the Back button to edit your text, or enter new text.</p>
         </div>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
@@ -60,6 +60,60 @@ const generateHtml={
          
         $('div.js-pageViewInstructionsHtml').html(pageInstructionsHtml);
         $('div.js-pageViewInstructionsHtml').hide();
+    },
+
+    mainHtml: function(){
+        console.log('In the mainHtml method.');
+        let pageMainHtml=`
+        <div class='mainBox'>
+        <h1>Ransom Note</h1>
+            <form class="js-textForm">
+            <p>Enter some text below,<br/>
+            then click Continue.
+            </p><br/>
+                <div>
+                    <label for="js-line-1">Line 1</label>
+                    <input type="text" id="js-line-1" name="line1" class="inputLine" />
+                </div>
+                <div>
+                    <label for="js-line-2">Line 2</label>
+                    <input type="text" id="js-line-2" name="line2" class="inputLine" />
+                </div>
+                <div>
+                    <label for="js-line-3">Line 3</label>
+                    <input type="text" id="js-line-3" name="line3" class="inputLine" />
+                </div>
+                <div>
+                    <label for="js-line-4">Line 4</label>
+                    <input type="text" id="js-line-4" name="line4" class="inputLine" />
+                </div>
+                <div>
+                    <label for="js-line-5">Line 5</label>
+                    <input type="text" id="js-line-5" name="line5" class="inputLine" />
+                </div>
+            </form>
+        </div>
+        <form class="buttonForm">
+            <div class="buttonBox"><button type="button" id="js-instructionsButton" class="js-button js-instructionsButton">Read Instructions</button></div>
+            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        </form>
+        `;
+        
+        $('div.js-pageViewMainHtml').html(pageMainHtml);
+        $('div.js-pageViewMainHtml').hide();
+    },
+
+    ransomNoteHtml: function(){
+        console.log('In the ransomNoteHtml method.');
+        let pageRansomNoteHtml=`
+        <p>Okay, here we are in the last page, where the photos will go.</p>
+        <form class="buttonForm">
+            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        </form>
+        `;
+        
+        $('div.js-pageViewRansomNoteHtml').html(pageRansomNoteHtml);
+        $('div.js-pageViewRansomNoteHtml').hide();
     }
 }
 
@@ -76,12 +130,12 @@ const renderPage={
         if(STORE.currentView==='instructions'){
             this.instructionsPage();
         }
-        // if(STORE.currentView==='main'){
-        //     this.mainPage();
-        // }
-        // if(STORE.currentView==='ransomNote'){
-        //     this.ransomNotePage();
-        // }
+        if(STORE.currentView==='main'){
+            this.mainPage();
+        }
+        if(STORE.currentView==='ransomNote'){
+            this.ransomNotePage();
+        }
    },
 
     showCurrentPage: function(pageToShow, userButtonText){
@@ -89,8 +143,8 @@ const renderPage={
         $('.js-userButton').text(userButtonText);
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInstructionsHtml').hide();
-        // $('div.js-pageViewMainHtml').hide();
-        // $('div.js-pageViewRansomNoteHtml').hide();
+        $('div.js-pageViewMainHtml').hide();
+        $('div.js-pageViewRansomNoteHtml').hide();
         if(pageToShow==='div.js-pageViewSplashHtml'){
             $(pageToShow).show();
         } else{
@@ -106,6 +160,16 @@ const renderPage={
     instructionsPage: function(){
         console.log('In the instructionsPage method.');
         this.showCurrentPage('div.js-pageViewInstructionsHtml', 'Start');
+    },
+
+    mainPage: function(){
+        console.log('In the mainPage method.');
+        this.showCurrentPage('div.js-pageViewMainHtml', 'Continue');
+    },
+
+    ransomNotePage: function(){
+        console.log('In the ransomNotePage method.');
+        this.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     }
 }
 
@@ -117,6 +181,7 @@ const listeners={
     listen: function(){
         console.log('In the listen method.');
         this.handleInstructionsButton();
+        this.handleUserButton();
     },
 
     handleInstructionsButton: function(){
@@ -124,6 +189,19 @@ const listeners={
         $('.js-instructionsButton').on('click', function() {
             STORE.currentView='instructions';
             renderPage.doShowPages();
+        });
+    },
+
+    handleUserButton: function(){
+        console.log('In the handleUserButton method.');
+        $('.js-userButton').on('click', function() {
+            if(STORE.currentView==='main'){
+                STORE.currentView='ransomNote';
+                renderPage.doShowPages();
+            }else{
+                STORE.currentView='main';
+                renderPage.doShowPages();
+            }
         });
     }
 }
@@ -136,30 +214,3 @@ function main(){
 }
 
 $(main);
-
-// function main(){
-//     $('.lightbox_trigger').click(function(e){
-//         e.preventDefault();
-//         var image_href=$(this).attr("href");
-//         if($('#lightbox').length>0){
-//             $('#content').html(`<img src='${image_href}' />`);
-//             $('#lightbox').fadeIn('slow');
-//         } else{
-//             var lightbox=`
-//                 <div id="lightbox">
-//                     <p class="exit">X</p>
-//                     <div id="content">
-//                         <img src='${image_href}' />
-//                     </div>
-//                 </div>
-//             `;
-//             $('body').append(lightbox);
-//             $('#lightbox').hide();
-//             $('#lightbox').fadeIn('slow');
-//         }
-//     });
-
-// 	$('body').on('click', '.exit', function() {
-// 		$('#lightbox').fadeOut();
-// 	});
-// }

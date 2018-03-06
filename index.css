@@ -31,9 +31,28 @@
     text-align: center;
 }
 
+.js-pageViewMainHtml{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(244, 248, 248);
+}
+
+.js-pageViewRansomNoteHtml{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(244, 248, 248);
+}
+
 h1{
     font-size: 1.5em;
     font-weight: 700;
+    padding-top: 25px;
     text-align: center;
 }
 
@@ -75,7 +94,7 @@ body{
 }
 
 .js-userButton{
-    width: 44%;
+    width: 64%;
 }
 
 .buttonBox{
@@ -87,7 +106,7 @@ body{
 }
 
 .instructionsBox{
-    position: relative;    
+    position: relative;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
@@ -100,6 +119,10 @@ body{
     overflow: auto;
     background-color: rgb(234, 234, 234);
     border: 3px solid gray;
+}
+
+.inputLine{
+    margin-bottom: 0.2em;
 }
 
 
