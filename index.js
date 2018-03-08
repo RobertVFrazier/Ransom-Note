@@ -10,7 +10,9 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     line_2: '',
     line_3: '',
     line_4: '',
-    line_5: ''
+    line_5: '',
+    fullText: '',
+    charCount: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   };
 
 /******************************************************** 
@@ -48,7 +50,7 @@ const generateHtml={
         let pageInstructionsHtml=`
         <div class='instructionsBox'>
             <h1>Welcome to Ransom Note!</h1>
-            <p>This app takes text which you type in and converts it to a series of photos of letters, numerals, and punctuation.</p>
+            <p>This app takes text which you type in and converts it to a series of photos of letters A-Z, a-z, numerals 0-9, and some punctuation . ? ! , - &.</p>
             <p>In the text input page (you get there by clicking the Start button) there are five text fields. Enter your text in one or more of them, then click the Continue button. A new screen will appear with your text turned to photos.</p>
             <p>If you don't like any of the random photos selected, you can change them. Just click on a photo to get a new random photo.</p>
             <p>When you're happy with the results, you can click on the Screen Shot button to take a picture of your ransom note text! Click the Back button to edit your text, or enter new text.</p>
@@ -169,6 +171,7 @@ const renderPage={
 
     ransomNotePage: function(){
         console.log('In the ransomNotePage method.');
+        getFlickrPics.createLetterPhotos();
         this.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     }
 }
@@ -210,6 +213,51 @@ const listeners={
         });
     }
 }
+
+/******************************************************** 
+ * Step 3: Get API data to match user inputs.
+ ********************************************************/
+
+const getFlickrPics={
+    createLetterPhotos: function(){
+        console.log('In the createLetterPhotos method.');
+        this.findLetterCounts();
+    },
+
+    findLetterCounts: function(){
+        console.log('In the findLetterCounts method.');
+        STORE.fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5.trim()).toUpperCase();
+        let strLen=STORE.fullText.trim().length;
+        STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        for(let i=0; i<strLen; i++){
+            let ascCode=STORE.fullText.charCodeAt(i)
+            if(ascCode!==32){  // Not interested in spaces here.
+                if(ascCode>=48 && ascCode<=57){  // 0-9
+                    STORE.charCount[ascCode-48]+=STORE.charCount[ascCode-48]===0 ? 25 : 10;
+                }else if(ascCode>=65 && ascCode<=90){  // A-Z
+                    STORE.charCount[ascCode-55]+=STORE.charCount[ascCode-55]===0 ? 25 : 10;
+                }else if(ascCode===46){  // .
+                    STORE.charCount[36]+=STORE.charCount[36]===0 ? 25 : 10;
+                }else if(ascCode===63){  // ?
+                    STORE.charCount[37]+=STORE.charCount[37]===0 ? 25 : 10;
+                }else if(ascCode===33){  // !
+                    STORE.charCount[38]+=STORE.charCount[38]===0 ? 25 : 10;
+                }else if(ascCode===44){  // ,
+                    STORE.charCount[39]+=STORE.charCount[39]===0 ? 25 : 10;
+                }else if(ascCode===45){  // -
+                    STORE.charCount[40]+=STORE.charCount[40]===0 ? 25 : 10;
+                }else if(ascCode===38){  // &
+                    STORE.charCount[41]+=STORE.charCount[41]===0 ? 25 : 10;
+                }
+            }
+        }
+        console.log(STORE);
+    }
+}
+
+/******************************************************** 
+ * Javascript starts here.
+ ********************************************************/
 
 function main(){
     console.log('Begin the program');
