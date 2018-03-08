@@ -12,7 +12,8 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     line_4: '',
     line_5: '',
     fullText: '',
-    charCount: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    charCount: [],
+    apiPhotos: []
   };
 
 /******************************************************** 
@@ -171,7 +172,7 @@ const renderPage={
 
     ransomNotePage: function(){
         console.log('In the ransomNotePage method.');
-        getFlickrPics.createLetterPhotos();
+        getFlickrPics.createCharacterPhotos();
         this.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     }
 }
@@ -219,39 +220,99 @@ const listeners={
  ********************************************************/
 
 const getFlickrPics={
-    createLetterPhotos: function(){
-        console.log('In the createLetterPhotos method.');
-        this.findLetterCounts();
+    createCharacterPhotos: function(){
+        console.log('In the createCharacterPhotos method.');
+        this.findCharacterCounts();
+        this.makeNumberApiCalls();
+        this.makeLetterApiCalls();
+        this.makePunctuationApiCalls();
+        console.log(STORE);
     },
 
-    findLetterCounts: function(){
-        console.log('In the findLetterCounts method.');
-        STORE.fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5.trim()).toUpperCase();
+    findCharacterCounts: function(){
+        console.log('In the findCharacterCounts method.');
+        STORE.fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5).trim().toUpperCase();
         let strLen=STORE.fullText.trim().length;
+        let baseCount=25;
+        let extraCount=10;
         STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         for(let i=0; i<strLen; i++){
             let ascCode=STORE.fullText.charCodeAt(i)
             if(ascCode!==32){  // Not interested in spaces here.
                 if(ascCode>=48 && ascCode<=57){  // 0-9
-                    STORE.charCount[ascCode-48]+=STORE.charCount[ascCode-48]===0 ? 25 : 10;
+                    STORE.charCount[ascCode-48]+=STORE.charCount[ascCode-48]===0 ? baseCount : extraCount;
                 }else if(ascCode>=65 && ascCode<=90){  // A-Z
-                    STORE.charCount[ascCode-55]+=STORE.charCount[ascCode-55]===0 ? 25 : 10;
+                    STORE.charCount[ascCode-55]+=STORE.charCount[ascCode-55]===0 ? baseCount : extraCount;
                 }else if(ascCode===46){  // .
-                    STORE.charCount[36]+=STORE.charCount[36]===0 ? 25 : 10;
+                    STORE.charCount[36]+=STORE.charCount[36]===0 ? baseCount : extraCount;
                 }else if(ascCode===63){  // ?
-                    STORE.charCount[37]+=STORE.charCount[37]===0 ? 25 : 10;
+                    STORE.charCount[37]+=STORE.charCount[37]===0 ? baseCount : extraCount;
                 }else if(ascCode===33){  // !
-                    STORE.charCount[38]+=STORE.charCount[38]===0 ? 25 : 10;
+                    STORE.charCount[38]+=STORE.charCount[38]===0 ? baseCount : extraCount;
                 }else if(ascCode===44){  // ,
-                    STORE.charCount[39]+=STORE.charCount[39]===0 ? 25 : 10;
+                    STORE.charCount[39]+=STORE.charCount[39]===0 ? baseCount : extraCount;
                 }else if(ascCode===45){  // -
-                    STORE.charCount[40]+=STORE.charCount[40]===0 ? 25 : 10;
+                    STORE.charCount[40]+=STORE.charCount[40]===0 ? baseCount : extraCount;
                 }else if(ascCode===38){  // &
-                    STORE.charCount[41]+=STORE.charCount[41]===0 ? 25 : 10;
+                    STORE.charCount[41]+=STORE.charCount[41]===0 ? baseCount : extraCount;
                 }
             }
         }
-        console.log(STORE);
+    },
+
+    makeNumberApiCalls: function(){
+        console.log('In the makeNumberApiCalls method.');
+        for(let i=0; i<10; i++){
+            if(STORE.charCount[i]!==0){
+                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=54718308@N00&per_page=${STORE.charCount[i]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${i===0 ? 'zero' : String.fromCharCode(i+48)}`,function(jsonTemp){
+                    console.log('In the makeNumberApiCalls json callback method.');
+                    let resultList=[];
+                    for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
+                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                    }
+                    STORE.apiPhotos[i]=resultList;
+                }).fail(function() {
+                    console.log( 'error' );
+                });
+            }
+        }
+    },
+
+    makeLetterApiCalls: function(){
+        console.log('In the makeLetterApiCalls method.');
+        for(let i=0; i<26; i++){
+            if(STORE.charCount[i+10]!==0){
+                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=27034531@N00&per_page=${STORE.charCount[i+10]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${String.fromCharCode(i+65)}`,function(jsonTemp){
+                    console.log('In the makeLetterApiCalls json callback method.');
+                    let resultList=[];
+                    for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
+                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                    }
+                    STORE.apiPhotos[i+10]=resultList;
+                }).fail(function() {
+                    console.log( 'error' );
+                });
+            }
+        }
+    },
+
+    makePunctuationApiCalls: function(){
+        console.log('In the makePunctuationApiCalls method.');
+        let punctArray=['fullstop','question','exclamation','comma','hyphen','ampersand'];
+        for(let i=0; i<6; i++){
+            if(STORE.charCount[i+36]!==0){
+                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=34231816@N00&per_page=${STORE.charCount[i+36]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${punctArray[i]}`,function(jsonTemp){
+                    console.log('In the makePunctuationApiCalls json callback method.');
+                    let resultList=[];
+                    for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
+                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                    }
+                    STORE.apiPhotos[i+36]=resultList;
+                }).fail(function() {
+                    console.log( 'error' );
+                });
+            }
+        }
     }
 }
 
