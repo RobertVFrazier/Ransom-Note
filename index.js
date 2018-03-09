@@ -300,6 +300,8 @@ const getFlickrPics={
                         resultList.push(newUrl);
                     }
                     STORE.apiPhotos[i]=resultList;
+                }).done(function() {
+                    console.log( 'Finished the makeApiCalls json callback method.' );
                     getFlickrPics.prepareRansomNotePage();
                 }).fail(function() {
                     console.log( 'error' );
@@ -310,22 +312,51 @@ const getFlickrPics={
 
     prepareRansomNotePage: function(){
         console.log('In the prepareRansomNotePage method.');
-        console.log(STORE.line_1);
-        let picLinks='';
-        for(let i=0; i<STORE.line_1.length; i++){
-            let charLoc=(STORE.line_1.toUpperCase().charCodeAt(i))-55;
-            console.log('charLoc: '+charLoc);
-            let picUrl=STORE.apiPhotos[charLoc][0];
-            console.log(picUrl);
-            picLinks+=`<img src='${picUrl}'>`;
-        }
-        console.log(picLinks);
-        $('#js-picTray1').html(picLinks);
-        $('#js-picTray2').text(STORE.line_2);
-        $('#js-picTray3').text(STORE.line_3);
-        $('#js-picTray4').text(STORE.line_4);
-        $('#js-picTray5').text(STORE.line_5);
+        let lineHtml='';
+        lineHtml=getFlickrPics.processLine(STORE.line_1);
+        $('#js-picTray1').html(lineHtml);
+        lineHtml=getFlickrPics.processLine(STORE.line_2);
+        $('#js-picTray2').html(lineHtml);
+        lineHtml=getFlickrPics.processLine(STORE.line_3);
+        $('#js-picTray3').html(lineHtml);
+        lineHtml=getFlickrPics.processLine(STORE.line_4);
+        $('#js-picTray4').html(lineHtml);
+        lineHtml=getFlickrPics.processLine(STORE.line_5);
+        $('#js-picTray5').html(lineHtml);
         renderPage.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
+    },
+
+    processLine: function(lineText){
+        console.log('In the processLine method.');
+        console.log(lineText);
+        let picLinks='';
+        let asciiCode=0;
+        let picUrl='';
+        let charLocation=0;
+        for(let i=0; i<lineText.length; i++){
+            let asciiCode=lineText.toUpperCase().charCodeAt(i);
+            console.log(asciiCode);
+            if(asciiCode>=48 && asciiCode<=57){           // Number
+                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][0]}'>`;
+            }else if(asciiCode>=65 && asciiCode<=90){     // Letter
+                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][0]}'>`;
+            }else if(asciiCode===46){                     // Period
+                picLinks+=`<img src='${STORE.apiPhotos[36][0]}'>`;
+            }else if(asciiCode===63){                     // Question
+                picLinks+=`<img src='${STORE.apiPhotos[37][0]}'>`;
+            }else if(asciiCode===33){                     // Exclamation
+                picLinks+=`<img src='${STORE.apiPhotos[38][0]}'>`;
+            }else if(asciiCode===44 || asciiCode===39){   // Comma or Apostrophe
+                picLinks+=`<img src='${STORE.apiPhotos[39][0]}'>`;
+            }else if(asciiCode===45){                     // Hyphen
+                picLinks+=`<img src='${STORE.apiPhotos[40][0]}'>`;
+            }else if(asciiCode===38){                     // Ampersand
+                picLinks+=`<img src='${STORE.apiPhotos[41][0]}'>`;
+            }else if(asciiCode===32){                     // Space
+                picLinks+=`<span class='space'> </span>`;
+            }                                             // Ignore all other characters
+        }
+        return picLinks;
     }
 }
 

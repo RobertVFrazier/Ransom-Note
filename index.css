@@ -143,7 +143,11 @@ body{
     color: white;
 }
 
-
+.space{
+    display: inline-block;
+    width: 50px;
+    background-color: black;
+}
 
 
 #wrapper{
