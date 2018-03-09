@@ -50,14 +50,14 @@
 }
 
 h1{
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 700;
-    padding-top: 25px;
+    padding-top: 15px;
     text-align: center;
 }
 
 p, .list{
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .list{
@@ -143,9 +143,15 @@ body{
     color: white;
 }
 
+.charPic{
+    display: inline-block;
+    width: 7vw;
+    height: 7vw;
+}
+
 .space{
     display: inline-block;
-    width: 50px;
+    width: 3.5vw;
     background-color: black;
 }
 

@@ -50,10 +50,9 @@ const generateHtml={
         let pageInstructionsHtml=`
         <div class='instructionsBox'>
             <h1>Welcome to Ransom Note!</h1>
-            <p>This app takes text which you type in and converts it to a series of photos of letters A-Z, a-z, numerals 0-9, and some punctuation . ? ! , - &.</p>
-            <p>In the text input page (you get there by clicking the Start button) there are five text fields. Enter your text in one or more of them, then click the Continue button. A new screen will appear with your text turned to photos.</p>
-            <p>If you don't like any of the random photos selected, you can change them. Just click on a photo to get a new random photo.</p>
-            <p>When you're happy with the results, you can click on the Screen Shot button to take a picture of your ransom note text! Click the Back button to edit your text, or enter new text.</p>
+            <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand. In the text edit page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
+            <p>Keep your message short! Each line can hold only 14 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
+            <p>If you don't like one of the random photos selected, you can change them. Just click on a photo to get a new random photo. When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to return to the text edit page.</p>
         </div>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
@@ -238,7 +237,7 @@ const getFlickrPics={
         let baseCount=25;
         let extraCount=10;
         STORE.apiPhotos=[];
-        STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         for(let i=0; i<strLen; i++){
             let ascCode=fullText.charCodeAt(i);
             if(ascCode!==32){  // Not interested in spaces here.
@@ -254,10 +253,12 @@ const getFlickrPics={
                     STORE.charCount[38]+=STORE.charCount[38]===0 ? baseCount : extraCount;
                 }else if(ascCode===44){  // ,
                     STORE.charCount[39]+=STORE.charCount[39]===0 ? baseCount : extraCount;
-                }else if(ascCode===45){  // -
+                }else if(ascCode===39){  // '
                     STORE.charCount[40]+=STORE.charCount[40]===0 ? baseCount : extraCount;
-                }else if(ascCode===38){  // &
+                }else if(ascCode===45){  // -
                     STORE.charCount[41]+=STORE.charCount[41]===0 ? baseCount : extraCount;
+                }else if(ascCode===38){  // &
+                    STORE.charCount[42]+=STORE.charCount[42]===0 ? baseCount : extraCount;
                 }
             }
         }
@@ -268,13 +269,13 @@ const getFlickrPics={
         let groupId='';
         let offset=0;
         let target='';
-        let punctArray=['fullstop','question','exclamation','comma','hyphen','ampersand'];
+        let punctArray=['fullstop','question','exclamation','comma','apostrophe','hyphen','ampersand'];
         let theFarm='';
         let theServer='';
         let theId='';
         let theSecret='';
         let newUrl='';
-        for(let i=0; i<42; i++){
+        for(let i=0; i<43; i++){
             if(i<10){          // Numbers
                 groupId='54718308@N00';
                 offset=48;
@@ -301,7 +302,7 @@ const getFlickrPics={
                     }
                     STORE.apiPhotos[i]=resultList;
                 }).done(function() {
-                    console.log( 'Finished the makeApiCalls json callback method.' );
+                    console.log( 'Finished the makeApiCalls json callback method. '+i );
                     getFlickrPics.prepareRansomNotePage();
                 }).fail(function() {
                     console.log( 'error' );
@@ -334,24 +335,48 @@ const getFlickrPics={
         let picUrl='';
         let charLocation=0;
         for(let i=0; i<lineText.length; i++){
-            let asciiCode=lineText.toUpperCase().charCodeAt(i);
-            console.log(asciiCode);
+            let asciiCode=lineText.charCodeAt(i);
+            console.log(`ascii code is: ${asciiCode}`);
             if(asciiCode>=48 && asciiCode<=57){           // Number
-                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][0]}'>`;
-            }else if(asciiCode>=65 && asciiCode<=90){     // Letter
-                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][0]}'>`;
-            }else if(asciiCode===46){                     // Period
-                picLinks+=`<img src='${STORE.apiPhotos[36][0]}'>`;
-            }else if(asciiCode===63){                     // Question
-                picLinks+=`<img src='${STORE.apiPhotos[37][0]}'>`;
-            }else if(asciiCode===33){                     // Exclamation
-                picLinks+=`<img src='${STORE.apiPhotos[38][0]}'>`;
-            }else if(asciiCode===44 || asciiCode===39){   // Comma or Apostrophe
-                picLinks+=`<img src='${STORE.apiPhotos[39][0]}'>`;
-            }else if(asciiCode===45){                     // Hyphen
-                picLinks+=`<img src='${STORE.apiPhotos[40][0]}'>`;
-            }else if(asciiCode===38){                     // Ampersand
-                picLinks+=`<img src='${STORE.apiPhotos[41][0]}'>`;
+                if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                };
+            }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
+                if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                };
+            }else if(asciiCode>=97 && asciiCode<=122){     // letter
+                if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                };
+            }else if(asciiCode===46){
+                if(typeof STORE.apiPhotos[36]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[36][0]}' alt='Period' class='charPic'>`;
+                };
+            }else if(asciiCode===63){
+                if(typeof STORE.apiPhotos[37]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[37][0]}' alt='Question' class='charPic'>`;
+                };
+            }else if(asciiCode===33){
+                if(typeof STORE.apiPhotos[38]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[38][0]}' alt='Exclamation' class='charPic'>`;
+                };
+            }else if(asciiCode===44){
+                if(typeof STORE.apiPhotos[39]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[39][0]}' alt='Comma' class='charPic'>`;
+                };
+            }else if(asciiCode===39){
+                if(typeof STORE.apiPhotos[40]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[40][0]}' alt='Apostrophe' class='charPic'>`;
+                };
+            }else if(asciiCode===45){
+                if(typeof STORE.apiPhotos[41]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[41][0]}' alt='Hyphen' class='charPic'>`;
+                };
+            }else if(asciiCode===38){
+                if(typeof STORE.apiPhotos[42]!='undefined'){
+                picLinks+=`<img src='${STORE.apiPhotos[42][0]}' alt='Ampersand' class='charPic'>`;
+                };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;
             }                                             // Ignore all other characters
