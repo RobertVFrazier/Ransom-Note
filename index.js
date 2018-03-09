@@ -15,6 +15,11 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     charCount: [],
     apiPhotos: []
   };
+var theFarm='';
+var theServer='';
+var theId='';
+var theSecret='';
+var newUrl='';
 
 /******************************************************** 
 Step 1: Render the DOM. 
@@ -268,7 +273,12 @@ const getFlickrPics={
                     console.log('In the makeNumberApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
-                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                        theFarm=jsonTemp.photos.photo[j].farm;
+                        theServer=jsonTemp.photos.photo[j].server;
+                        theId=jsonTemp.photos.photo[j].id;
+                        theSecret=jsonTemp.photos.photo[j].secret;
+                        newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
+                        resultList.push(newUrl);
                     }
                     STORE.apiPhotos[i]=resultList;
                 }).fail(function() {
@@ -286,7 +296,12 @@ const getFlickrPics={
                     console.log('In the makeLetterApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
-                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                        theFarm=jsonTemp.photos.photo[j].farm;
+                        theServer=jsonTemp.photos.photo[j].server;
+                        theId=jsonTemp.photos.photo[j].id;
+                        theSecret=jsonTemp.photos.photo[j].secret;
+                        newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
+                        resultList.push(newUrl);
                     }
                     STORE.apiPhotos[i+10]=resultList;
                 }).fail(function() {
@@ -305,7 +320,12 @@ const getFlickrPics={
                     console.log('In the makePunctuationApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
-                        resultList.push(jsonTemp.photos.photo[j].url_sq);
+                        theFarm=jsonTemp.photos.photo[j].farm;
+                        theServer=jsonTemp.photos.photo[j].server;
+                        theId=jsonTemp.photos.photo[j].id;
+                        theSecret=jsonTemp.photos.photo[j].secret;
+                        newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
+                        resultList.push(newUrl);
                     }
                     STORE.apiPhotos[i+36]=resultList;
                 }).fail(function() {
