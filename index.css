@@ -74,9 +74,17 @@ body{
 
 .buttonForm{
     position: absolute;
-    bottom: 0;
+    bottom: 4vh;
     width: 100%;
     margin-bottom: 0;
+}
+
+.buttonBox{
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 1vh;
+    height: 5vh;
+    width: 180px;
 }
 
 .js-button{
@@ -97,14 +105,6 @@ body{
     width: 64%;
 }
 
-.buttonBox{
-    display: block;
-    margin: 0 auto;
-    padding-bottom: 5px;
-    height: 30px;
-    width: 180px;
-}
-
 .instructionsBox{
     position: relative;
     margin-left: auto;
@@ -123,6 +123,24 @@ body{
 
 .inputLine{
     margin-bottom: 0.2em;
+}
+
+.display{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    background-color: yellow;
+}
+
+.picTray{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5vh;
+    height: 16vh;
+    background-color: black;
+    color: white;
 }
 
 

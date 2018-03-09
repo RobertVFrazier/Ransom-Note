@@ -11,15 +11,9 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     line_3: '',
     line_4: '',
     line_5: '',
-    fullText: '',
     charCount: [],
     apiPhotos: []
   };
-var theFarm='';
-var theServer='';
-var theId='';
-var theSecret='';
-var newUrl='';
 
 /******************************************************** 
 Step 1: Render the DOM. 
@@ -114,7 +108,13 @@ const generateHtml={
     ransomNoteHtml: function(){
         console.log('In the ransomNoteHtml method.');
         let pageRansomNoteHtml=`
-        <p>Okay, here we are in the last page, where the photos will go.</p>
+        <form class='display'>
+            <div class='picTray' id='js-picTray1'></div>
+            <div class='picTray' id='js-picTray2'></div>
+            <div class='picTray' id='js-picTray3'></div>
+            <div class='picTray' id='js-picTray4'></div>
+            <div class='picTray' id='js-picTray5'></div>
+        </form>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
         </form>
@@ -178,7 +178,6 @@ const renderPage={
     ransomNotePage: function(){
         console.log('In the ransomNotePage method.');
         getFlickrPics.createCharacterPhotos();
-        this.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     }
 }
 
@@ -228,21 +227,20 @@ const getFlickrPics={
     createCharacterPhotos: function(){
         console.log('In the createCharacterPhotos method.');
         this.findCharacterCounts();
-        this.makeNumberApiCalls();
-        this.makeLetterApiCalls();
-        this.makePunctuationApiCalls();
+        this.makeApiCalls();
         console.log(STORE);
     },
 
     findCharacterCounts: function(){
         console.log('In the findCharacterCounts method.');
-        STORE.fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5).trim().toUpperCase();
-        let strLen=STORE.fullText.trim().length;
+        let fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5).trim().toUpperCase();
+        let strLen=fullText.trim().length;
         let baseCount=25;
         let extraCount=10;
+        STORE.apiPhotos=[];
         STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         for(let i=0; i<strLen; i++){
-            let ascCode=STORE.fullText.charCodeAt(i)
+            let ascCode=fullText.charCodeAt(i);
             if(ascCode!==32){  // Not interested in spaces here.
                 if(ascCode>=48 && ascCode<=57){  // 0-9
                     STORE.charCount[ascCode-48]+=STORE.charCount[ascCode-48]===0 ? baseCount : extraCount;
@@ -265,12 +263,33 @@ const getFlickrPics={
         }
     },
 
-    makeNumberApiCalls: function(){
-        console.log('In the makeNumberApiCalls method.');
-        for(let i=0; i<10; i++){
+    makeApiCalls: function(){
+        console.log('In the makeApiCalls method.');
+        let groupId='';
+        let offset=0;
+        let target='';
+        let punctArray=['fullstop','question','exclamation','comma','hyphen','ampersand'];
+        let theFarm='';
+        let theServer='';
+        let theId='';
+        let theSecret='';
+        let newUrl='';
+        for(let i=0; i<42; i++){
+            if(i<10){          // Numbers
+                groupId='54718308@N00';
+                offset=48;
+                target=(i===0 ? 'zero' : String.fromCharCode(i+offset));
+            }else if(i<36){    // Letters
+                groupId='27034531@N00';
+                offset=55;
+                target=String.fromCharCode(i+offset)
+            }else{             // Punctuation
+                groupId='34231816@N00';
+                target=punctArray[i-36];
+            }
             if(STORE.charCount[i]!==0){
-                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=54718308@N00&per_page=${STORE.charCount[i]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${i===0 ? 'zero' : String.fromCharCode(i+48)}`,function(jsonTemp){
-                    console.log('In the makeNumberApiCalls json callback method.');
+                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=${groupId}&per_page=${STORE.charCount[i]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${target}`,function(jsonTemp){
+                    console.log('In the makeApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
                         theFarm=jsonTemp.photos.photo[j].farm;
@@ -281,6 +300,7 @@ const getFlickrPics={
                         resultList.push(newUrl);
                     }
                     STORE.apiPhotos[i]=resultList;
+                    getFlickrPics.prepareRansomNotePage();
                 }).fail(function() {
                     console.log( 'error' );
                 });
@@ -288,51 +308,24 @@ const getFlickrPics={
         }
     },
 
-    makeLetterApiCalls: function(){
-        console.log('In the makeLetterApiCalls method.');
-        for(let i=0; i<26; i++){
-            if(STORE.charCount[i+10]!==0){
-                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=27034531@N00&per_page=${STORE.charCount[i+10]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${String.fromCharCode(i+65)}`,function(jsonTemp){
-                    console.log('In the makeLetterApiCalls json callback method.');
-                    let resultList=[];
-                    for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
-                        theFarm=jsonTemp.photos.photo[j].farm;
-                        theServer=jsonTemp.photos.photo[j].server;
-                        theId=jsonTemp.photos.photo[j].id;
-                        theSecret=jsonTemp.photos.photo[j].secret;
-                        newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
-                        resultList.push(newUrl);
-                    }
-                    STORE.apiPhotos[i+10]=resultList;
-                }).fail(function() {
-                    console.log( 'error' );
-                });
-            }
+    prepareRansomNotePage: function(){
+        console.log('In the prepareRansomNotePage method.');
+        console.log(STORE.line_1);
+        let picLinks='';
+        for(let i=0; i<STORE.line_1.length; i++){
+            let charLoc=(STORE.line_1.toUpperCase().charCodeAt(i))-55;
+            console.log('charLoc: '+charLoc);
+            let picUrl=STORE.apiPhotos[charLoc][0];
+            console.log(picUrl);
+            picLinks+=`<img src='${picUrl}'>`;
         }
-    },
-
-    makePunctuationApiCalls: function(){
-        console.log('In the makePunctuationApiCalls method.');
-        let punctArray=['fullstop','question','exclamation','comma','hyphen','ampersand'];
-        for(let i=0; i<6; i++){
-            if(STORE.charCount[i+36]!==0){
-                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=34231816@N00&per_page=${STORE.charCount[i+36]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${punctArray[i]}`,function(jsonTemp){
-                    console.log('In the makePunctuationApiCalls json callback method.');
-                    let resultList=[];
-                    for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
-                        theFarm=jsonTemp.photos.photo[j].farm;
-                        theServer=jsonTemp.photos.photo[j].server;
-                        theId=jsonTemp.photos.photo[j].id;
-                        theSecret=jsonTemp.photos.photo[j].secret;
-                        newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
-                        resultList.push(newUrl);
-                    }
-                    STORE.apiPhotos[i+36]=resultList;
-                }).fail(function() {
-                    console.log( 'error' );
-                });
-            }
-        }
+        console.log(picLinks);
+        $('#js-picTray1').html(picLinks);
+        $('#js-picTray2').text(STORE.line_2);
+        $('#js-picTray3').text(STORE.line_3);
+        $('#js-picTray4').text(STORE.line_4);
+        $('#js-picTray5').text(STORE.line_5);
+        renderPage.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     }
 }
 
