@@ -51,8 +51,8 @@ const generateHtml={
         <div class='instructionsBox'>
             <h1>Welcome to Ransom Note!</h1>
             <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand. In the text edit page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
-            <p>Keep your message short! Each line can hold only 14 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
-            <p>If you don't like one of the random photos selected, you can change them. Just click on a photo to get a new random photo. When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to return to the text edit page.</p>
+            <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
+            <p>If you don't like the random photos selected, you can change them. Just click on a photo to get a new random photo, or click Shuffle to change them all. When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to return to the text edit page.</p>
         </div>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
@@ -115,6 +115,7 @@ const generateHtml={
             <div class='picTray' id='js-picTray5'></div>
         </form>
         <form class="buttonForm">
+            <div class="buttonBox"><button type="button" id="js-shuffleButton" class="js-button js-shuffleButton">Shuffle</button></div>
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
         </form>
         `;
@@ -189,6 +190,7 @@ const listeners={
         console.log('In the listen method.');
         this.handleInstructionsButton();
         this.handleUserButton();
+        this.handleShuffleButton();
     },
 
     handleInstructionsButton: function(){
@@ -201,7 +203,7 @@ const listeners={
 
     handleUserButton: function(){
         console.log('In the handleUserButton method.');
-        $('.js-userButton').on('click', function() {
+        $('.js-userButton').on('click', function(){
             if(STORE.currentView==='main'){
                 STORE.line_1=document.querySelector('#js-line-1').value;
                 STORE.line_2=document.querySelector('#js-line-2').value;
@@ -214,6 +216,13 @@ const listeners={
                 STORE.currentView='main';
                 renderPage.doShowPages();
             }
+        });
+    },
+
+    handleShuffleButton: function(){
+        console.log('In the handleShuffleButton method.');
+        $('.js-shuffleButton').on('click', function(){
+            getFlickrPics.prepareRansomNotePage();
         });
     }
 };
@@ -341,52 +350,52 @@ const getFlickrPics={
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos0${asciiCode-48}'>`;
                 };
             }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
                 if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-55].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos${asciiCode-55}'>`;
                 };
             }else if(asciiCode>=97 && asciiCode<=122){     // letter
                 if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-87].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos${asciiCode-87}'>`;
                 };
             }else if(asciiCode===46){
                 if(typeof STORE.apiPhotos[36]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[36].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[36][randomNum]}' alt='Period' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[36][randomNum]}' alt='Period' class='charPic pos36'>`;
                 };
             }else if(asciiCode===63){
                 if(typeof STORE.apiPhotos[37]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[37].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[37][randomNum]}' alt='Question' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[37][randomNum]}' alt='Question' class='charPic pos37'>`;
                 };
             }else if(asciiCode===33){
                 if(typeof STORE.apiPhotos[38]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[38].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' class='charPic pos38'>`;
                 };
             }else if(asciiCode===44){
                 if(typeof STORE.apiPhotos[39]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[39].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' class='charPic pos39'>`;
                 };
             }else if(asciiCode===39){
                 if(typeof STORE.apiPhotos[40]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[40].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' class='charPic pos40'>`;
                 };
             }else if(asciiCode===45){
                 if(typeof STORE.apiPhotos[41]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[41].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' class='charPic'>`;
+                    picLinks+=`<img src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' class='charPic pos41'>`;
                 };
             }else if(asciiCode===38){
                 if(typeof STORE.apiPhotos[42]!='undefined'){
-                    randomNum=getFlickrPics.pickNum(0,STORE.charCount[42].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[42].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' class='charPic pos42'>`;
                 };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;

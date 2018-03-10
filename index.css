@@ -130,7 +130,7 @@ body{
     margin-left: auto;
     margin-right: auto;
     margin-top: 2vh;
-    background-color: yellow;
+    background-color: black;
 }
 
 .picTray{
@@ -145,13 +145,15 @@ body{
 
 .charPic{
     display: inline-block;
-    width: 7vw;
-    height: 7vw;
+    width: 5.2vw;
+    height: 5.2vw;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .space{
     display: inline-block;
-    width: 3.5vw;
+    width: 2.6vw;
     background-color: black;
 }
 
