@@ -122,7 +122,7 @@ const generateHtml={
         $('div.js-pageViewRansomNoteHtml').html(pageRansomNoteHtml);
         $('div.js-pageViewRansomNoteHtml').hide();
     }
-}
+};
 
 /************************************************************* 
 Step 1b: Render each HTML page, based on the current state. 
@@ -178,7 +178,7 @@ const renderPage={
         console.log('In the ransomNotePage method.');
         getFlickrPics.createCharacterPhotos();
     }
-}
+};
 
 /******************************************************** 
  * Step 2: Listen for user interactions.
@@ -216,7 +216,7 @@ const listeners={
             }
         });
     }
-}
+};
 
 /******************************************************** 
  * Step 3: Get API data to match user inputs.
@@ -334,56 +334,74 @@ const getFlickrPics={
         let asciiCode=0;
         let picUrl='';
         let charLocation=0;
+        let randomNum=0;
         for(let i=0; i<lineText.length; i++){
             let asciiCode=lineText.charCodeAt(i);
             console.log(`ascii code is: ${asciiCode}`);
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
                 };
             }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
                 if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-55].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
                 };
             }else if(asciiCode>=97 && asciiCode<=122){     // letter
                 if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][0]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-87].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic'>`;
                 };
             }else if(asciiCode===46){
                 if(typeof STORE.apiPhotos[36]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[36][0]}' alt='Period' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[36].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[36][randomNum]}' alt='Period' class='charPic'>`;
                 };
             }else if(asciiCode===63){
                 if(typeof STORE.apiPhotos[37]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[37][0]}' alt='Question' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[37].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[37][randomNum]}' alt='Question' class='charPic'>`;
                 };
             }else if(asciiCode===33){
                 if(typeof STORE.apiPhotos[38]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[38][0]}' alt='Exclamation' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[38].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' class='charPic'>`;
                 };
             }else if(asciiCode===44){
                 if(typeof STORE.apiPhotos[39]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[39][0]}' alt='Comma' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[39].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' class='charPic'>`;
                 };
             }else if(asciiCode===39){
                 if(typeof STORE.apiPhotos[40]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[40][0]}' alt='Apostrophe' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[40].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' class='charPic'>`;
                 };
             }else if(asciiCode===45){
                 if(typeof STORE.apiPhotos[41]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[41][0]}' alt='Hyphen' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[41].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' class='charPic'>`;
                 };
             }else if(asciiCode===38){
                 if(typeof STORE.apiPhotos[42]!='undefined'){
-                picLinks+=`<img src='${STORE.apiPhotos[42][0]}' alt='Ampersand' class='charPic'>`;
+                    randomNum=getFlickrPics.pickNum(0,STORE.charCount[42].length-1);
+                    picLinks+=`<img src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' class='charPic'>`;
                 };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;
             }                                             // Ignore all other characters
         }
         return picLinks;
+    },
+
+    pickNum: function(min, max){
+        console.log('In the pickNum method');
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-}
+};
 
 /******************************************************** 
  * Javascript starts here.
@@ -394,6 +412,6 @@ function main(){
     generateHtml.doHtmlPages();
     renderPage.doShowPages();
     listeners.listen();
-}
+};
 
 $(main);
