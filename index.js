@@ -231,17 +231,12 @@ const listeners={
         console.log('In the handleCharacterPicClicks method.');
         $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
             let targetCharacterPic=$(event.currentTarget);
-            let charPos=targetCharacterPic[0].attributes[5].value;
-            let currCharIndex=STORE.apiPhotos[charPos].indexOf(targetCharacterPic[0].src);
+            let charPos=targetCharacterPic[0].attributes[5].value;            // attribute 5 is 'pos' (user-defined), set to 0 - 42
             let currPicUrl=targetCharacterPic[0].src;
+            let currCharIndex=STORE.apiPhotos[charPos].indexOf(currPicUrl);   // Get the index from the URL of the image clicked.
             let currCharArrayLen=STORE.apiPhotos[charPos].length;
-            // console.log('image # is: '+charPos, 'index is: '+currCharIndex);
-            // console.log(currPicUrl);
-            // console.log('array length # is: '+currCharArrayLen);
             let photoNum=currCharIndex===currCharArrayLen-1 ? 0 : currCharIndex+1;
-            // console.log('new photo url # is: '+photoNum);
             let newPicUrl=STORE.apiPhotos[charPos][photoNum];
-            // console.log(newPicUrl);
             $(event.currentTarget)[0].src=newPicUrl;
         });
     }
@@ -327,7 +322,7 @@ const getFlickrPics={
                         theId=jsonTemp.photos.photo[j].id;
                         theSecret=jsonTemp.photos.photo[j].secret;
                         newUrl=`https://farm${theFarm}.staticflickr.com/${theServer}/${theId}_${theSecret}_q.jpg`;
-                        resultList.push(newUrl);
+                        resultList.push(newUrl);                    
                     }
                     STORE.apiPhotos[i]=resultList;
                 }).done(function() {
