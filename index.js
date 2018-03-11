@@ -258,8 +258,8 @@ const getFlickrPics={
         console.log('In the findCharacterCounts method.');
         let fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5).trim().toUpperCase();
         let strLen=fullText.trim().length;
-        let baseCount=25;
-        let extraCount=10;
+        let baseCount=100;
+        let extraCount=25;
         STORE.apiPhotos=[];
         STORE.charCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         for(let i=0; i<strLen; i++){
