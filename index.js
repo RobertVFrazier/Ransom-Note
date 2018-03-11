@@ -107,13 +107,13 @@ const generateHtml={
     ransomNoteHtml: function(){
         console.log('In the ransomNoteHtml method.');
         let pageRansomNoteHtml=`
-        <form class='display'>
+        <div class='display'>
             <div class='picTray' id='js-picTray1'></div>
             <div class='picTray' id='js-picTray2'></div>
             <div class='picTray' id='js-picTray3'></div>
             <div class='picTray' id='js-picTray4'></div>
             <div class='picTray' id='js-picTray5'></div>
-        </form>
+        </div>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-shuffleButton" class="js-button js-shuffleButton">Shuffle</button></div>
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
@@ -191,6 +191,7 @@ const listeners={
         this.handleInstructionsButton();
         this.handleUserButton();
         this.handleShuffleButton();
+        this.handleCharacterPicClicks();
     },
 
     handleInstructionsButton: function(){
@@ -223,6 +224,25 @@ const listeners={
         console.log('In the handleShuffleButton method.');
         $('.js-shuffleButton').on('click', function(){
             getFlickrPics.prepareRansomNotePage();
+        });
+    },
+
+    handleCharacterPicClicks(){
+        console.log('In the handleCharacterPicClicks method.');
+        $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
+            let targetCharacterPic=$(event.currentTarget);
+            let charPos=targetCharacterPic[0].attributes[5].value;
+            let currCharIndex=STORE.apiPhotos[charPos].indexOf(targetCharacterPic[0].src);
+            let currPicUrl=targetCharacterPic[0].src;
+            let currCharArrayLen=STORE.apiPhotos[charPos].length;
+            // console.log('image # is: '+charPos, 'index is: '+currCharIndex);
+            // console.log(currPicUrl);
+            // console.log('array length # is: '+currCharArrayLen);
+            let photoNum=currCharIndex===currCharArrayLen-1 ? 0 : currCharIndex+1;
+            // console.log('new photo url # is: '+photoNum);
+            let newPicUrl=STORE.apiPhotos[charPos][photoNum];
+            // console.log(newPicUrl);
+            $(event.currentTarget)[0].src=newPicUrl;
         });
     }
 };
@@ -350,52 +370,52 @@ const getFlickrPics={
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos0${asciiCode-48}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-48}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
                 if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-55].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos${asciiCode-55}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-55}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=97 && asciiCode<=122){     // letter
                 if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-87].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' class='charPic pos${asciiCode-87}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-87}' class='js-charPic'>`;
                 };
             }else if(asciiCode===46){
                 if(typeof STORE.apiPhotos[36]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[36].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[36][randomNum]}' alt='Period' class='charPic pos36'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[36][randomNum]}' alt='Period' role='button' aria-pressed='false' pos='36' class='js-charPic'>`;
                 };
             }else if(asciiCode===63){
                 if(typeof STORE.apiPhotos[37]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[37].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[37][randomNum]}' alt='Question' class='charPic pos37'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[37][randomNum]}' alt='Question' role='button' aria-pressed='false' pos='37' class='js-charPic'>`;
                 };
             }else if(asciiCode===33){
                 if(typeof STORE.apiPhotos[38]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[38].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' class='charPic pos38'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' role='button' aria-pressed='false' pos='38' class='js-charPic'>`;
                 };
             }else if(asciiCode===44){
                 if(typeof STORE.apiPhotos[39]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[39].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' class='charPic pos39'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' role='button' aria-pressed='false' pos='39' class='js-charPic'>`;
                 };
             }else if(asciiCode===39){
                 if(typeof STORE.apiPhotos[40]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[40].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' class='charPic pos40'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' role='button' aria-pressed='false' pos='40' class='js-charPic'>`;
                 };
             }else if(asciiCode===45){
                 if(typeof STORE.apiPhotos[41]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[41].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' class='charPic pos41'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' role='button' aria-pressed='false' pos='41' class='js-charPic'>`;
                 };
             }else if(asciiCode===38){
                 if(typeof STORE.apiPhotos[42]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[42].length-1);
-                    picLinks+=`<img src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' class='charPic pos42'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' role='button' aria-pressed='false' pos='42' class='js-charPic'>`;
                 };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;
