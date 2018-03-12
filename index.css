@@ -80,7 +80,6 @@ body{
 }
 
 .buttonBox{
-    display: block;
     margin: 0 auto;
     padding-bottom: 1vh;
     height: 5vh;
@@ -88,7 +87,6 @@ body{
 }
 
 .js-button{
-    display: block;
     margin: 0 auto;
     width: 100%;
     height: 100%;
@@ -97,8 +95,8 @@ body{
     font-weight: 700;
 }
 
-.js-instructionsButton{
-    width: 100%;
+.js-shuffleButton{
+    display: inline;
 }
 
 .js-userButton{
