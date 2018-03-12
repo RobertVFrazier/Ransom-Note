@@ -54,9 +54,13 @@
 
 h1{
     font-size: 1.2em;
-    font-weight: 700;
+    font-weight: 800;
     padding-top: 15px;
     text-align: center;
+}
+
+.js-textForm{
+    font-weight: 700;
 }
 
 p, .list{
@@ -85,6 +89,7 @@ body{
 .buttonBox{
     margin: 0 auto;
     padding-bottom: 1vh;
+    min-height: 30px;
     height: 5vh;
     width: 180px;
 }
@@ -124,6 +129,7 @@ body{
 
 .inputLine{
     margin-bottom: 0.2em;
+    width: 250px;
 }
 
 .display{
