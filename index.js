@@ -49,10 +49,13 @@ const generateHtml={
         console.log('In the instructionsHtml method.');
         let pageInstructionsHtml=`
         <div class='instructionsBox'>
-            <h1>Welcome to Ransom Note!</h1>
-            <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand. In the text edit page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
-            <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
-            <p>If you don't like the random photos selected, you can change them. Just click on a photo to get a new random photo, or click Shuffle to change them all. Click Back to return to the text edit page.</p>
+        <h1>Welcome to Ransom Note!</h1>
+        <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
+        <p>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's "Spell with flickr" (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
+        <p>In the text input page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
+        <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
+        <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a photo to change it.</p>
+        <p>When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to edit or enter new text.</p>
         </div>
         <form class="buttonForm">
             <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
@@ -225,6 +228,11 @@ const listeners={
         $('.js-shuffleButton').on('click', function(){
             getFlickrPics.prepareRansomNotePage();
         });
+    },
+    
+    handleTextInputs: function(){
+        console.log('In the handleTextInputs method.');
+        document.getElementById('js-line-1')[0].focus();
     },
 
     handleCharacterPicClicks(){
