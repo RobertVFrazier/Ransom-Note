@@ -6,11 +6,8 @@
 
 const STORE = {  // All the variables connected with the state of the DOM go here.
     currentView: 'splash',
-    line_1: '',
-    line_2: '',
-    line_3: '',
-    line_4: '',
-    line_5: '',
+    lines: [],
+    widths: [18,18,18,18,18],
     charCount: [],
     apiPhotos: []
   };
@@ -25,7 +22,7 @@ Step 1a: Generate the HTML code.
 
 const generateHtml={
     doHtmlPages: function(){
-        console.log('In the doHtmlPages method.');
+        // console.log('In the doHtmlPages method.');
         this.splashHtml();
         this.instructionsHtml();
         this.mainHtml();
@@ -33,11 +30,11 @@ const generateHtml={
     },
 
     splashHtml: function(){
-        console.log('In the splashHtml method.');
+        // console.log('In the splashHtml method.');
         let pageSplashHtml=`
-        <form class="buttonForm">
-            <div class="buttonBox"><button type="button" id="js-instructionsButton" class="js-button js-instructionsButton">Read Instructions</button></div>
-            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        <form class='buttonForm'>
+            <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
         </form>
         `;
         
@@ -46,19 +43,19 @@ const generateHtml={
     },
 
     instructionsHtml: function(){
-        console.log('In the instructionsHtml method.');
+        // console.log('In the instructionsHtml method.');
         let pageInstructionsHtml=`
         <div class='instructionsBox'>
         <h1>Welcome to Ransom Note!</h1>
         <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
-        <p>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's "Spell with flickr" (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
+        <p>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
         <p>In the text input page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
         <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
         <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a photo to change it.</p>
         <p>When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to edit or enter new text.</p>
         </div>
-        <form class="buttonForm">
-            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        <form class='buttonForm'>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
         </form>
         `;
          
@@ -67,39 +64,44 @@ const generateHtml={
     },
 
     mainHtml: function(){
-        console.log('In the mainHtml method.');
+        // console.log('In the mainHtml method.');
         let pageMainHtml=`
         <div class='mainBox'>
         <h1>Ransom Note</h1>
-            <form class="js-textForm">
+            <form class='js-textForm'>
             <p>Enter some text below,<br/>
             then click Continue.
             </p><br/>
                 <div>
-                    <label for="js-line-1">Line 1</label>
-                    <input type="text" id="js-line-1" name="line1" class="inputLine" />
+                    <label for='js-line-1'>Line 1</label>
+                    <input type='text' id='js-line-1' name='line1' class='js-inputLine' />
+                    <span class='countDown js-countDown1'>${STORE.widths[0]}</span>
                 </div>
                 <div>
-                    <label for="js-line-2">Line 2</label>
-                    <input type="text" id="js-line-2" name="line2" class="inputLine" />
+                    <label for='js-line-2'>Line 2</label>
+                    <input type='text' id='js-line-2' name='line2' class='js-inputLine' />
+                    <span class='countDown js-countDown2'>${STORE.widths[1]}</span>
                 </div>
                 <div>
-                    <label for="js-line-3">Line 3</label>
-                    <input type="text" id="js-line-3" name="line3" class="inputLine" />
+                    <label for='js-line-3'>Line 3</label>
+                    <input type='text' id='js-line-3' name='line3' class='js-inputLine' />
+                    <span class='countDown js-countDown3'>${STORE.widths[2]}</span>
                 </div>
                 <div>
-                    <label for="js-line-4">Line 4</label>
-                    <input type="text" id="js-line-4" name="line4" class="inputLine" />
+                    <label for='js-line-4'>Line 4</label>
+                    <input type='text' id='js-line-4' name='line4' class='js-inputLine' />
+                    <span class='countDown js-countDown4'>${STORE.widths[3]}</span>
                 </div>
                 <div>
-                    <label for="js-line-5">Line 5</label>
-                    <input type="text" id="js-line-5" name="line5" class="inputLine" />
+                    <label for='js-line-5'>Line 5</label>
+                    <input type='text' id='js-line-5' name='line5' class='js-inputLine' />
+                    <span class='countDown js-countDown5'>${STORE.widths[4]}</span>
                 </div>
             </form>
         </div>
-        <form class="buttonForm">
-            <div class="buttonBox"><button type="button" id="js-instructionsButton" class="js-button js-instructionsButton">Read Instructions</button></div>
-            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        <form class='buttonForm'>
+            <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
         </form>
         `;
         
@@ -108,7 +110,7 @@ const generateHtml={
     },
 
     ransomNoteHtml: function(){
-        console.log('In the ransomNoteHtml method.');
+        // console.log('In the ransomNoteHtml method.');
         let pageRansomNoteHtml=`
         <div id='js-display' class='display'>
             <div class='picTray' id='js-picTray1'></div>
@@ -117,9 +119,9 @@ const generateHtml={
             <div class='picTray' id='js-picTray4'></div>
             <div class='picTray' id='js-picTray5'></div>
         </div>
-        <form class="buttonForm">
-            <div class="buttonBox"><button type="button" id="js-shuffleButton" class="js-button js-shuffleButton">Shuffle</button></div>
-            <div class="buttonBox"><button type="button" id="js-userButton" class="js-button js-userButton"></button></div>
+        <form class='buttonForm'>
+            <div class='buttonBox'><button type='button' id='js-shuffleButton' class='js-button js-shuffleButton'>Shuffle</button></div>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
         </form>
         `;
         
@@ -134,7 +136,7 @@ Step 1b: Render each HTML page, based on the current state.
 
 const renderPage={
    doShowPages: function(){
-        console.log('In the doShowPages method.');
+        // console.log('In the doShowPages method.');
         if(STORE.currentView==='splash'){
             this.splashPage();
         }
@@ -150,7 +152,7 @@ const renderPage={
    },
 
     showCurrentPage: function(pageToShow, userButtonText){
-        console.log('In the showCurrentPage method.'); 
+        // console.log('In the showCurrentPage method.'); 
         $('.js-userButton').text(userButtonText);
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInstructionsHtml').hide();
@@ -164,22 +166,23 @@ const renderPage={
     },
 
     splashPage: function(){
-        console.log('In the splashPage method.');
+        // console.log('In the splashPage method.');
         this.showCurrentPage('div.js-pageViewSplashHtml', 'Start');
     },
 
     instructionsPage: function(){
-        console.log('In the instructionsPage method.');
+        // console.log('In the instructionsPage method.');
         this.showCurrentPage('div.js-pageViewInstructionsHtml', 'Start');
     },
 
     mainPage: function(){
-        console.log('In the mainPage method.');
+        // console.log('In the mainPage method.');
         this.showCurrentPage('div.js-pageViewMainHtml', 'Continue');
+        $('span.js-countDown').text(STORE.widths[0]);
     },
 
     ransomNotePage: function(){
-        console.log('In the ransomNotePage method.');
+        // console.log('In the ransomNotePage method.');
         getFlickrPics.createCharacterPhotos();
     }
 };
@@ -190,15 +193,16 @@ const renderPage={
 
 const listeners={
     listen: function(){
-        console.log('In the listen method.');
+        // console.log('In the listen method.');
         this.handleInstructionsButton();
         this.handleUserButton();
         this.handleShuffleButton();
         this.handleCharacterPicClicks();
+        this.handleLineLiveType();
     },
 
     handleInstructionsButton: function(){
-        console.log('In the handleInstructionsButton method.');
+        // console.log('In the handleInstructionsButton method.');
         $('.js-instructionsButton').on('click', function() {
             STORE.currentView='instructions';
             renderPage.doShowPages();
@@ -206,14 +210,14 @@ const listeners={
     },
 
     handleUserButton: function(){
-        console.log('In the handleUserButton method.');
+        // console.log('In the handleUserButton method.');
         $('.js-userButton').on('click', function(){
             if(STORE.currentView==='main'){
-                STORE.line_1=document.querySelector('#js-line-1').value;
-                STORE.line_2=document.querySelector('#js-line-2').value;
-                STORE.line_3=document.querySelector('#js-line-3').value;
-                STORE.line_4=document.querySelector('#js-line-4').value;
-                STORE.line_5=document.querySelector('#js-line-5').value;
+                STORE.lines[0]=document.querySelector('#js-line-1').value.trim();
+                STORE.lines[1]=document.querySelector('#js-line-2').value.trim();
+                STORE.lines[2]=document.querySelector('#js-line-3').value.trim();
+                STORE.lines[3]=document.querySelector('#js-line-4').value.trim();
+                STORE.lines[4]=document.querySelector('#js-line-5').value.trim();
                 STORE.currentView='ransomNote';
                 renderPage.doShowPages();
             }else{
@@ -224,19 +228,14 @@ const listeners={
     },
 
     handleShuffleButton: function(){
-        console.log('In the handleShuffleButton method.');
+        // console.log('In the handleShuffleButton method.');
         $('.js-shuffleButton').on('click', function(){
             getFlickrPics.prepareRansomNotePage();
         });
     },
-    
-    handleTextInputs: function(){
-        console.log('In the handleTextInputs method.');
-        document.getElementById('js-line-1')[0].focus();
-    },
 
-    handleCharacterPicClicks(){
-        console.log('In the handleCharacterPicClicks method.');
+    handleCharacterPicClicks: function(){
+        // console.log('In the handleCharacterPicClicks method.');
         $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
             let targetCharacterPic=$(event.currentTarget);
             let charPos=targetCharacterPic[0].attributes[5].value;            // attribute 5 is 'pos' (user-defined), set to 0 - 42
@@ -247,6 +246,22 @@ const listeners={
             let newPicUrl=STORE.apiPhotos[charPos][photoNum];
             $(event.currentTarget)[0].src=newPicUrl;
         });
+    },
+
+    handleLineLiveType: function(){
+        // console.log('In the handleLineLiveType method.');
+        $('.js-pageViewMainHtml').on('keyup', '.js-inputLine', function(event){
+            let theTarget=$(event.currentTarget);
+            let targetLineNum=theTarget[0].id.slice(-1);
+            console.log(`This is line ${targetLineNum-1}.`);
+            let theCharCount=$(this).val().trim().length;
+            let spaceCount=$(this).val().trim().split(' ').length-1;
+            let lineWidth=(theCharCount-(spaceCount/2));
+            STORE.widths[targetLineNum-1]=18-lineWidth;
+            console.log(`There are ${theCharCount} characters. ${spaceCount} of them are spaces.`);
+            console.log(`This will be ${lineWidth} wide. Room for ${STORE.widths[targetLineNum-1]} more.`);
+            $('span.js-countDown'+targetLineNum).text(STORE.widths[targetLineNum-1]);
+        });
     }
 };
 
@@ -256,15 +271,14 @@ const listeners={
 
 const getFlickrPics={
     createCharacterPhotos: function(){
-        console.log('In the createCharacterPhotos method.');
+        // console.log('In the createCharacterPhotos method.');
         this.findCharacterCounts();
         this.makeApiCalls();
-        console.log(STORE);
     },
 
     findCharacterCounts: function(){
-        console.log('In the findCharacterCounts method.');
-        let fullText=(STORE.line_1.trim()+' '+STORE.line_2.trim()+' '+STORE.line_3.trim()+' '+STORE.line_4.trim()+' '+STORE.line_5).trim().toUpperCase();
+        // console.log('In the findCharacterCounts method.');
+        let fullText=(STORE.lines[0].trim()+' '+STORE.lines[1].trim()+' '+STORE.lines[2].trim()+' '+STORE.lines[3].trim()+' '+STORE.lines[4]).trim().toUpperCase();
         let strLen=fullText.trim().length;
         let baseCount=100;
         let extraCount=25;
@@ -297,7 +311,7 @@ const getFlickrPics={
     },
 
     makeApiCalls: function(){
-        console.log('In the makeApiCalls method.');
+        // console.log('In the makeApiCalls method.');
         let groupId='';
         let offset=0;
         let target='';
@@ -322,7 +336,7 @@ const getFlickrPics={
             }
             if(STORE.charCount[i]!==0){
                 $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=${groupId}&per_page=${STORE.charCount[i]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${target}`,function(jsonTemp){
-                    console.log('In the makeApiCalls json callback method.');
+                    // console.log('In the makeApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
                         theFarm=jsonTemp.photos.photo[j].farm;
@@ -334,7 +348,7 @@ const getFlickrPics={
                     }
                     STORE.apiPhotos[i]=resultList;
                 }).done(function() {
-                    console.log( 'Finished the makeApiCalls json callback method. '+i );
+                    // console.log( 'Finished the makeApiCalls json callback method. '+i );
                     getFlickrPics.prepareRansomNotePage();
                 }).fail(function() {
                     console.log( 'error' );
@@ -344,24 +358,23 @@ const getFlickrPics={
     },
 
     prepareRansomNotePage: function(){
-        console.log('In the prepareRansomNotePage method.');
+        // console.log('In the prepareRansomNotePage method.');
         let lineHtml='';
-        lineHtml=getFlickrPics.processLine(STORE.line_1);
+        lineHtml=getFlickrPics.processLine(STORE.lines[0]);
         $('#js-picTray1').html(lineHtml);
-        lineHtml=getFlickrPics.processLine(STORE.line_2);
+        lineHtml=getFlickrPics.processLine(STORE.lines[1]);
         $('#js-picTray2').html(lineHtml);
-        lineHtml=getFlickrPics.processLine(STORE.line_3);
+        lineHtml=getFlickrPics.processLine(STORE.lines[2]);
         $('#js-picTray3').html(lineHtml);
-        lineHtml=getFlickrPics.processLine(STORE.line_4);
+        lineHtml=getFlickrPics.processLine(STORE.lines[3]);
         $('#js-picTray4').html(lineHtml);
-        lineHtml=getFlickrPics.processLine(STORE.line_5);
+        lineHtml=getFlickrPics.processLine(STORE.lines[4]);
         $('#js-picTray5').html(lineHtml);
         renderPage.showCurrentPage('div.js-pageViewRansomNoteHtml', 'Back');
     },
 
     processLine: function(lineText){
-        console.log('In the processLine method.');
-        console.log(lineText);
+        // console.log('In the processLine method.');
         let picLinks='';
         let asciiCode=0;
         let picUrl='';
@@ -369,7 +382,6 @@ const getFlickrPics={
         let randomNum=0;
         for(let i=0; i<lineText.length; i++){
             let asciiCode=lineText.charCodeAt(i);
-            console.log(`ascii code is: ${asciiCode}`);
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
@@ -428,7 +440,7 @@ const getFlickrPics={
     },
 
     pickNum: function(min, max){
-        console.log('In the pickNum method');
+        // console.log('In the pickNum method');
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -440,7 +452,7 @@ const getFlickrPics={
  ********************************************************/
 
 function main(){
-    console.log('Begin the program');
+    // console.log('Begin the program');
     generateHtml.doHtmlPages();
     renderPage.doShowPages();
     listeners.listen();

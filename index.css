@@ -4,6 +4,8 @@
 
 .js-backGround{
     position: relative;
+    display: flex;
+    flex-direction: column;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -22,22 +24,12 @@
 
 .js-pageViewInstructionsHtml{
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-image: url(overlay.png), url("logo.png"), url("paper.jpg");
     background-size: cover, 75vw, cover;
-    text-align: center;
 }
 
 .js-pageViewMainHtml{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    height: 100vh;
-    /* background-color: chartreuse; */
+    position: fixed;
     background-image: url("Main_Back.jpg");
     background-size: initial;
     background-repeat: repeat;
@@ -45,11 +37,7 @@
 
 .js-pageViewRansomNoteHtml{
     position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
     height: 100vh;
-    background-color: rgb(244, 248, 248);
 }
 
 h1{
@@ -75,15 +63,14 @@ p, .list{
 body{
     margin: 0;
     padding: 0;
-    background: #efefef;
+    background: #302f2f;
     text-align: center;
 }
 
 .buttonForm{
     position: absolute;
-    bottom: 4vh;
+    bottom: 0;
     width: 100%;
-    margin-bottom: 0;
 }
 
 .buttonBox{
@@ -105,6 +92,7 @@ body{
 
 .js-shuffleButton{
     display: inline;
+    width: 65%;
 }
 
 .js-userButton{
@@ -127,31 +115,47 @@ body{
     border: 3px solid gray;
 }
 
-.inputLine{
+.js-inputLine{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
     margin-bottom: 0.2em;
-    width: 250px;
+    width: 190px;
+}
+
+.countDown{
+    display: inline-block;
+    width: 40px;
+    background-color: greenyellow;
 }
 
 .display{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2vh;
+    position: absolute;
+    width: 100%;
+    top: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 0.7vh;
     background-color: black;
 }
 
 .picTray{
-    position: relative;
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0.5vh;
-    height: 16vh;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 13vh;
     background-color: black;
     color: white;
 }
 
 .js-charPic{
-    display: inline-block;
+    /* display: inline-block; */
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
     width: 5.2vw;
     height: 5.2vw;
     padding-left: 1px;
@@ -162,64 +166,4 @@ body{
     display: inline-block;
     width: 2.6vw;
     background-color: black;
-}
-
-
-#wrapper{
-    position: relative;
-    display: block;
-    width: 600px;
-    margin: 0 auto;
-    background: #fff;
-    text-align: left;
-    border: 1px solid #ccc;
-    border-top: none;
-    padding: 25px;
-    border-radius: 0 0 5px 5px;
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 5px #ccc;
-    -moz-box-shadow: 0 0 5px #ccc;
-    -webkit-box-shadow: 0 0 5px #ccc;
-}
-
-#lightbox{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(overlay.png) repeat;
-    text-align: center;
-}
-
-#lightbox p{
-    text-align: right;
-    margin-right: 20px;
-    font-size: 12px;
-}
-
-#lightbox img{
-    position: relative;
-    top: 35px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 0 25px #111;
-    -moz-box-shadow: 0 0 25px #111;
-    -webkit-box-shadow: 0 0 25px #111;
-    max-width: 940px;
-}
-
-.exit{
-    position: absolute;
-    right: -5px;
-    top: 15px;
-    width: 25px;
-    height: 26px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 800;
-    color: black;
-    background-color: white;
-    border: 4px solid red;
-    padding: 4px;
 }
