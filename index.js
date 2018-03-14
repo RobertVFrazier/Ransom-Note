@@ -70,30 +70,32 @@ const generateHtml={
         <h1>Ransom Note</h1>
             <form class='js-textForm'>
             <p>Enter some text below,<br/>
-            then click Continue.
+            then click Continue.<br/><br/>
+            If the counter drops below zero,<br/>
+            move some text to the next line.
             </p><br/>
-                <div>
-                    <label for='js-line-1'>Line 1</label>
+                <div class='inputBox'>
+                    <label for='js-line-1' class='js-lineLabel'>Line 1 </label>
                     <input type='text' id='js-line-1' name='line1' class='js-inputLine' />
                     <span class='countDown js-countDown1'>${STORE.widths[0]}</span>
                 </div>
-                <div>
-                    <label for='js-line-2'>Line 2</label>
+                <div class='inputBox'>
+                    <label for='js-line-2' class='js-lineLabel'>Line 2 </label>
                     <input type='text' id='js-line-2' name='line2' class='js-inputLine' />
                     <span class='countDown js-countDown2'>${STORE.widths[1]}</span>
                 </div>
-                <div>
-                    <label for='js-line-3'>Line 3</label>
+                <div class='inputBox'>
+                    <label for='js-line-3' class='js-lineLabel'>Line 3 </label>
                     <input type='text' id='js-line-3' name='line3' class='js-inputLine' />
                     <span class='countDown js-countDown3'>${STORE.widths[2]}</span>
                 </div>
-                <div>
-                    <label for='js-line-4'>Line 4</label>
+                <div class='inputBox'>
+                    <label for='js-line-4' class='js-lineLabel'>Line 4 </label>
                     <input type='text' id='js-line-4' name='line4' class='js-inputLine' />
                     <span class='countDown js-countDown4'>${STORE.widths[3]}</span>
                 </div>
-                <div>
-                    <label for='js-line-5'>Line 5</label>
+                <div class='inputBox'>
+                    <label for='js-line-5' class='js-lineLabel'>Line 5 </label>
                     <input type='text' id='js-line-5' name='line5' class='js-inputLine' />
                     <span class='countDown js-countDown5'>${STORE.widths[4]}</span>
                 </div>
@@ -112,6 +114,7 @@ const generateHtml={
     ransomNoteHtml: function(){
         // console.log('In the ransomNoteHtml method.');
         let pageRansomNoteHtml=`
+        <div class='finalHint'>Click any photo to change it!</div>
         <div id='js-display' class='display'>
             <div class='picTray' id='js-picTray1'></div>
             <div class='picTray' id='js-picTray2'></div>
@@ -250,7 +253,7 @@ const listeners={
 
     handleLineLiveType: function(){
         // console.log('In the handleLineLiveType method.');
-        $('.js-pageViewMainHtml').on('keyup', '.js-inputLine', function(event){
+        $('.js-pageViewMainHtml').on('change keyup blur', '.js-inputLine', function(event){
             let theTarget=$(event.currentTarget);
             let targetLineNum=theTarget[0].id.slice(-1);
             console.log(`This is line ${targetLineNum-1}.`);

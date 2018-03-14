@@ -67,6 +67,14 @@ body{
     text-align: center;
 }
 
+.finalHint{
+    width: 230px;
+    height: 18px;
+    margin: 0 auto;
+    padding: 0;
+    background-color: lightgray;
+}
+
 .buttonForm{
     position: absolute;
     bottom: 0;
@@ -115,17 +123,30 @@ body{
     border: 3px solid gray;
 }
 
+.inputBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+
 .js-inputLine{
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
-    margin-bottom: 0.2em;
     width: 190px;
+}
+
+.js-lineLabel{
+    padding-right: 4px;
 }
 
 .countDown{
     display: inline-block;
     width: 40px;
-    background-color: greenyellow;
+    margin-left: 4px;
+    padding-top: 2px;
+    border: 1px solid gray;
+    background-color: white;
 }
 
 .display{
@@ -139,11 +160,9 @@ body{
 }
 
 .picTray{
-    /* position: relative; */
     display: flex;
-    flex-direction: row;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+    justify-content: center;
     margin-top: 5px;
     margin-bottom: 5px;
     height: 13vh;
@@ -152,10 +171,6 @@ body{
 }
 
 .js-charPic{
-    /* display: inline-block; */
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
     width: 5.2vw;
     height: 5.2vw;
     padding-left: 1px;
