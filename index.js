@@ -76,7 +76,7 @@ const generateHtml={
             </p><br/>
                 <div class='inputBox'>
                     <label for='js-line-1' class='js-lineLabel'>Line 1 </label>
-                    <input type='text' id='js-line-1' name='line1' class='js-inputLine' />
+                    <input type='text' id='js-line-1' name='line1' class='js-inputLine' autofocus />
                     <span class='countDown js-countDown1'>${STORE.widths[0]}</span>
                 </div>
                 <div class='inputBox'>
