@@ -241,7 +241,7 @@ const listeners={
         // console.log('In the handleCharacterPicClicks method.');
         $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
             let targetCharacterPic=$(event.currentTarget);
-            let charPos=targetCharacterPic[0].attributes[5].value;            // attribute 5 is 'pos' (user-defined), set to 0 - 42
+            let charPos=targetCharacterPic[0].attributes.pos.value;           // attribute 'pos' is user-defined, set to 0 - 42
             let currPicUrl=targetCharacterPic[0].src;
             let currCharIndex=STORE.apiPhotos[charPos].indexOf(currPicUrl);   // Get the index from the URL of the image clicked.
             let currCharArrayLen=STORE.apiPhotos[charPos].length;
