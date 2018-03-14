@@ -34,7 +34,7 @@ const generateHtml={
         let pageSplashHtml=`
         <form class='buttonForm'>
             <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -55,7 +55,7 @@ const generateHtml={
         <p>When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to edit or enter new text.</p>
         </div>
         <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
+            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
          
