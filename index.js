@@ -52,7 +52,7 @@ const generateHtml={
         <p>In the text input page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
         <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
         <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a photo to change it.</p>
-        <p>When you're happy, click on Screen Shot to take a picture of your ransom note text! Click Back to edit or enter new text.</p>
+        <p>Click the Back button to edit your text, or to enter new text.</p>
         </div>
         <form class='buttonForm'>
             <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
