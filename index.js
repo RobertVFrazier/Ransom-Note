@@ -261,8 +261,6 @@ const listeners={
             let spaceCount=$(this).val().trim().split(' ').length-1;
             let lineWidth=(theCharCount-(spaceCount/2));
             STORE.widths[targetLineNum-1]=18-lineWidth;
-            console.log(`There are ${theCharCount} characters. ${spaceCount} of them are spaces.`);
-            console.log(`This will be ${lineWidth} wide. Room for ${STORE.widths[targetLineNum-1]} more.`);
             $('span.js-countDown'+targetLineNum).text(STORE.widths[targetLineNum-1]);
         });
     }
