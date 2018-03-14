@@ -256,7 +256,6 @@ const listeners={
         $('.js-pageViewMainHtml').on('change keyup blur', '.js-inputLine', function(event){
             let theTarget=$(event.currentTarget);
             let targetLineNum=theTarget[0].id.slice(-1);
-            console.log(`This is line ${targetLineNum-1}.`);
             let theCharCount=$(this).val().trim().length;
             let spaceCount=$(this).val().trim().split(' ').length-1;
             let lineWidth=(theCharCount-(spaceCount/2));
