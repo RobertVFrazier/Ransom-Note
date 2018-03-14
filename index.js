@@ -48,11 +48,12 @@ const generateHtml={
         <div class='instructionsBox'>
         <h1>Welcome to Ransom Note!</h1>
         <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
-        <p>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
-        <p>In the text input page (click the Start button), there are five text fields. Enter your text in them, then click Continue. A new screen will appear with your text turned to photos.</p>
-        <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter to track how many more characters will fit in the line you're on.</p>
+        <p>In the text input page (click the Start button), there are five text fields. Enter your text in any or all of them, then click Continue. A new screen will appear with your text turned to photos.</p>
+        <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter next to each line to track how many more characters will fit.</p>
         <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a photo to change it.</p>
-        <p>Click the Back button to edit your text, or to enter new text.</p>
+        <p>Click the Back button to return to the text entry screen.</p><br />
+        
+        <p class=techNote>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
         </div>
         <form class='buttonForm'>
             <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>

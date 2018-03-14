@@ -28,11 +28,26 @@
     background-size: cover, 75vw, cover;
 }
 
+.techNote{
+    font-size: 0.7em;
+}
+
 .js-pageViewMainHtml{
     position: fixed;
     background-image: url("Main_Back.jpg");
     background-size: initial;
     background-repeat: repeat;
+    height: 100vh;
+    background-color: linen;
+}
+
+.mainBox{
+    width: 350px;
+    border: solid 1px grey;
+    padding-bottom: 15px;
+    margin: 0 auto;
+    margin-top: 15px;
+    background-color: rgba(234, 234, 234, 0.85);
 }
 
 .js-pageViewRansomNoteHtml{
