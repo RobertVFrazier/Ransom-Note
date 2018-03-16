@@ -90,6 +90,7 @@ body{
 }
 
 .buttonForm{
+    /* font-family: 'Archivo Black', roboto, sans-serif; */
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -100,25 +101,29 @@ body{
     padding-bottom: 1vh;
     min-height: 30px;
     height: 5vh;
-    width: 180px;
+    width: 200px;
 }
 
 .js-button{
+    font-family: 'Archivo Black', roboto, sans-serif;
     margin: 0 auto;
     width: 100%;
     height: 100%;
-    border-radius: 40px;
-    font-size: 1em;
+    border-radius: 10px;
+    color: rgb(6, 32, 146);
+    border-color: rgb(59, 147, 173);
+    background-color: rgb(174, 236, 255);
+    font-size: .9em;
     font-weight: 700;
 }
 
 .ransomButtonBox{
-    width: 310px;
+    width: 320px;
 }
 
 .js-shuffleButton, .js-distortButton, .js-undistortButton{
     display: inline-block;
-    width: 28%;
+    width: 30%;
 }
 
 .js-userButton{
