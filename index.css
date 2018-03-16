@@ -80,7 +80,7 @@ body{
 }
 
 .finalHint{
-    width: 380px;
+    width: 310px;
     height: 18px;
     margin: 0 auto;
     padding: 0;
@@ -113,7 +113,7 @@ body{
 }
 
 .ransomButtonBox{
-    width: 440px;
+    width: 310px;
 }
 
 .js-shuffleButton, .js-distortButton, .js-undistortButton{
