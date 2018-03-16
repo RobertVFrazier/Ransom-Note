@@ -51,8 +51,8 @@ const generateHtml={
         <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
         <p>In the text input page (click the Start button), there are five text fields. Enter your text in any or all of them, then click Continue. A new screen will appear with your text turned to photos.</p>
         <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter next to each line to track how many more characters will fit.</p>
-        <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a photo to change it.</p>
-        <p>Click the Back button to return to the text entry screen.</p><br />
+        <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a single photo to change it.</p>
+        <p>Click Distort to randomly vary the size and tilt of the pictures. Undistort restores them. Click the Back button to return to the text entry screen.</p><br />
         
         <p class=techNote>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
         </div>
@@ -60,7 +60,8 @@ const generateHtml={
             <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
-         
+        
+        
         $('div.js-pageViewInstructionsHtml').html(pageInstructionsHtml);
         $('div.js-pageViewInstructionsHtml').hide();
     },
@@ -124,8 +125,12 @@ const generateHtml={
             <div class='picTray' id='js-picTray4'></div>
             <div class='picTray' id='js-picTray5'></div>
         </div>
-        <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' id='js-shuffleButton' class='js-button js-shuffleButton'>Shuffle</button></div>
+        <form class='buttonForm'>        
+            <div class='buttonBox ransomButtonBox'>
+                <button type='button' id='js-shuffleButton' class='js-button js-shuffleButton'>Shuffle</button>
+                <button type='button' id='js-distortButton' class='js-button js-distortButton'>Distort</button>
+                <button type='button' id='js-undistortButton' class='js-button js-undistortButton'>Undistort</button>
+            </div>
             <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
         </form>
         `;
@@ -202,6 +207,8 @@ const listeners={
         this.handleInstructionsButton();
         this.handleUserButton();
         this.handleShuffleButton();
+        this.handleDistortButton();
+        this.handleUndistortButton();
         this.handleCharacterPicClicks();
         this.handleLineLiveType();
     },
@@ -239,6 +246,33 @@ const listeners={
         });
     },
 
+    handleDistortButton: function(){
+        // console.log('In the handleDistortButton method.');
+        $('.js-distortButton').on('click', function(){
+            let charListLen=((STORE.lines[0].trim()+STORE.lines[1].trim()+STORE.lines[2].trim()+STORE.lines[3].trim()+STORE.lines[4]).trim()).replace(/\s/g,'').length;
+            let rotateRange=33;
+            let scaleRange=15;
+            let randomNum=0;
+            for(let i=0; i<charListLen; i++){
+                randomNum=getFlickrPics.pickNum(1,rotateRange*2);
+                document.querySelector(`.showPos${i}`).style.setProperty(`--rotate${i}`,(randomNum-rotateRange)+'deg');
+                randomNum=getFlickrPics.pickNum(1,scaleRange*2);
+                document.querySelector(`.showPos${i}`).style.setProperty(`--scale${i}`,(1+((randomNum-scaleRange)/100)));
+            }
+        });
+    },
+
+    handleUndistortButton: function(){
+        // console.log('In the handleUndistortButton method.');
+        $('.js-undistortButton').on('click', function(){
+            let charListLen=((STORE.lines[0].trim()+STORE.lines[1].trim()+STORE.lines[2].trim()+STORE.lines[3].trim()+STORE.lines[4]).trim()).replace(/\s/g,'').length;
+            for(let i=0; i<charListLen; i++){
+                document.querySelector(`.showPos${i}`).style.setProperty(`--rotate${i}`,0+'deg');
+                document.querySelector(`.showPos${i}`).style.setProperty(`--scale${i}`,1);
+            }
+        });
+    },
+    
     handleCharacterPicClicks: function(){
         // console.log('In the handleCharacterPicClicks method.');
         $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
@@ -460,9 +494,9 @@ const getFlickrPics={
     }
 };
 
-/******************************************************** 
+/***************************** 
  * Javascript starts here.
- ********************************************************/
+ ****************************/
 
 function main(){
     // console.log('Begin the program');
