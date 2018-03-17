@@ -385,8 +385,8 @@ body{
     --scale87: 1;
     --rotate88: 0deg;
     --scale88: 1;
-    --rotate90: 0deg;
-    --scale90: 1;
+    --rotate89: 0deg;
+    --scale89: 1;
 }
 
 .showPos0{
@@ -747,8 +747,4 @@ body{
 
 .showPos89{
     transform: rotate(var(--rotate89)) scale(var(--scale89));
-}
-
-.showPos90{
-    transform: rotate(var(--rotate90)) scale(var(--scale90));
 }

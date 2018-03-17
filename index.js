@@ -35,7 +35,7 @@ const generateHtml={
         let pageSplashHtml=`
         <form class='buttonForm'>
             <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
+            <div class='buttonBox'><button type='button' id='js-splashUserButton' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -57,7 +57,7 @@ const generateHtml={
         <p class=techNote>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
         </div>
         <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton' autofocus></button></div>
+            <div class='buttonBox'><button type='button' id='js-instructionsUserButton' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -106,7 +106,7 @@ const generateHtml={
         </div>
         <form class='buttonForm'>
             <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
+            <div class='buttonBox'><button type='button' id='js-mainUserButton' class='js-button js-userButton'></button></div>
         </form>
         `;
         
@@ -131,7 +131,7 @@ const generateHtml={
                 <button type='button' id='js-distortButton' class='js-button js-distortButton'>Distort</button>
                 <button type='button' id='js-undistortButton' class='js-button js-undistortButton'>Undistort</button>
             </div>
-            <div class='buttonBox'><button type='button' id='js-userButton' class='js-button js-userButton'></button></div>
+            <div class='buttonBox'><button type='button' id='js-ransomeUserButton' class='js-button js-userButton'></button></div>
         </form>
         `;
         
@@ -152,9 +152,11 @@ const renderPage={
         }
         if(STORE.currentView==='instructions'){
             this.instructionsPage();
+            $('#js-instructionsUserButton').focus();
         }
         if(STORE.currentView==='main'){
             this.mainPage();
+            $('#js-line-1').focus();
         }
         if(STORE.currentView==='ransomNote'){
             this.ransomNotePage();
@@ -168,11 +170,7 @@ const renderPage={
         $('div.js-pageViewInstructionsHtml').hide();
         $('div.js-pageViewMainHtml').hide();
         $('div.js-pageViewRansomNoteHtml').hide();
-        if(pageToShow==='div.js-pageViewSplashHtml'){
-            $(pageToShow).show();
-        } else{
-            $(pageToShow).fadeIn('slow');
-        }        
+        $(pageToShow).show();
     },
 
     splashPage: function(){
