@@ -11,7 +11,6 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     charCount: [],
     apiPhotos: []
   };
-  var showPos=-1;
 
 /******************************************************** 
 Step 1: Render the DOM. 
@@ -246,28 +245,25 @@ const listeners={
 
     handleDistortButton: function(){
         // console.log('In the handleDistortButton method.');
-        $('.js-distortButton').on('click', function(){
-            let charListLen=((STORE.lines[0].trim()+STORE.lines[1].trim()+STORE.lines[2].trim()+STORE.lines[3].trim()+STORE.lines[4]).trim()).replace(/\s/g,'').length;
-            let rotateRange=33;
-            let scaleRange=15;
-            let randomNum=0;
-            for(let i=0; i<charListLen; i++){
-                randomNum=getFlickrPics.pickNum(1,rotateRange*2);
-                document.querySelector(`.showPos${i}`).style.setProperty(`--rotate${i}`,(randomNum-rotateRange)+'deg');
-                randomNum=getFlickrPics.pickNum(1,scaleRange*2);
-                document.querySelector(`.showPos${i}`).style.setProperty(`--scale${i}`,(1+((randomNum-scaleRange)/100)));
-            }
+        $('.js-distortButton').click(function(){
+            let rotateRange=35;
+            let scaleRange=20;
+            $('.js-charPic').each(function(){
+                let rotateAmount=Math.floor(Math.random()*(rotateRange*2))-rotateRange;
+                let scaleAmount=1+(Math.floor(Math.random()*scaleRange*2)-scaleRange)/100;
+                let transformation=`rotate(${rotateAmount}deg) scale(${scaleAmount})`;
+                $(this).css('transform', transformation);
+            });
         });
     },
-
+    
     handleUndistortButton: function(){
         // console.log('In the handleUndistortButton method.');
-        $('.js-undistortButton').on('click', function(){
-            let charListLen=((STORE.lines[0].trim()+STORE.lines[1].trim()+STORE.lines[2].trim()+STORE.lines[3].trim()+STORE.lines[4]).trim()).replace(/\s/g,'').length;
-            for(let i=0; i<charListLen; i++){
-                document.querySelector(`.showPos${i}`).style.setProperty(`--rotate${i}`,0+'deg');
-                document.querySelector(`.showPos${i}`).style.setProperty(`--scale${i}`,1);
-            }
+        $('.js-undistortButton').click(function(){
+            $('.js-charPic').each(function(){
+                let transformation=`rotate(0deg) scale(1)`;
+                $(this).css('transform', transformation);
+            });
         });
     },
     
@@ -394,7 +390,6 @@ const getFlickrPics={
     prepareRansomNotePage: function(){
         // console.log('In the prepareRansomNotePage method.');
         let lineHtml='';
-        showPos=-1;
         lineHtml=getFlickrPics.processLine(STORE.lines[0]);
         $('#js-picTray1').html(lineHtml);
         lineHtml=getFlickrPics.processLine(STORE.lines[1]);
@@ -419,63 +414,53 @@ const getFlickrPics={
             let asciiCode=lineText.charCodeAt(i);
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-48}' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-48}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
                 if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-55].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-55}' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-55}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=97 && asciiCode<=122){     // letter
                 if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-87].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-87}' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-87}' class='js-charPic'>`;
                 };
             }else if(asciiCode===46){
                 if(typeof STORE.apiPhotos[36]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[36].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[36][randomNum]}' alt='Period' role='button' aria-pressed='false' pos='36' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[36][randomNum]}' alt='Period' role='button' aria-pressed='false' pos='36' class='js-charPic'>`;
                 };
             }else if(asciiCode===63){
                 if(typeof STORE.apiPhotos[37]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[37].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[37][randomNum]}' alt='Question' role='button' aria-pressed='false' pos='37' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[37][randomNum]}' alt='Question' role='button' aria-pressed='false' pos='37' class='js-charPic'>`;
                 };
             }else if(asciiCode===33){
                 if(typeof STORE.apiPhotos[38]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[38].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' role='button' aria-pressed='false' pos='38' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' role='button' aria-pressed='false' pos='38' class='js-charPic'>`;
                 };
             }else if(asciiCode===44){
                 if(typeof STORE.apiPhotos[39]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[39].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' role='button' aria-pressed='false' pos='39' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' role='button' aria-pressed='false' pos='39' class='js-charPic'>`;
                 };
             }else if(asciiCode===39){
                 if(typeof STORE.apiPhotos[40]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[40].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' role='button' aria-pressed='false' pos='40' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' role='button' aria-pressed='false' pos='40' class='js-charPic'>`;
                 };
             }else if(asciiCode===45){
                 if(typeof STORE.apiPhotos[41]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[41].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' role='button' aria-pressed='false' pos='41' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' role='button' aria-pressed='false' pos='41' class='js-charPic'>`;
                 };
             }else if(asciiCode===38){
                 if(typeof STORE.apiPhotos[42]!='undefined'){
-                    showPos++;
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[42].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' role='button' aria-pressed='false' pos='42' class='js-charPic showPos${showPos}'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' role='button' aria-pressed='false' pos='42' class='js-charPic'>`;
                 };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;
