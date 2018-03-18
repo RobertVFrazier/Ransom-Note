@@ -92,7 +92,7 @@ body{
 .buttonForm{
     /* font-family: 'Archivo Black', roboto, sans-serif; */
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     width: 100%;
 }
 
