@@ -105,7 +105,7 @@ const generateHtml={
                     <br/><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button>
                 </div>
                 <div class='buttonBox'>
-                <br/><button type='button' id='js-mainUserButton' class='js-button js-userButton'></button>
+                    <br/><button type='button' id='js-mainUserButton' class='js-button js-userButton'></button>
                 </div>
             </form>
         </div>

@@ -53,6 +53,7 @@ p{
     padding-bottom: 15px;
     margin: 0 auto;
     margin-top: 15px;
+    overflow: auto;
     background-color: rgba(234, 234, 234, 0.85);
 }
 
