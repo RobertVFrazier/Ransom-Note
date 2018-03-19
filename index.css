@@ -33,14 +33,18 @@ p{
     padding-top: 0.75em;
 }
 
+main{
+    height: 100%;
+}
+
 .techNote{
     font-weight: 300;
     font-size: 0.8em;
 }
 
 .js-pageViewMainHtml{
-    margin: 3px;
-    padding: 5px;
+    height: 100%;
+    padding: 10px;
     background-image: url("Main_Back.jpg");
     background-size: initial;
     background-repeat: repeat;
@@ -50,9 +54,8 @@ p{
 .mainBox{
     width: 350px;
     border: solid 1px grey;
-    padding-bottom: 15px;
     margin: 0 auto;
-    margin-top: 15px;
+    padding-bottom: 20px;
     background-color: rgba(234, 234, 234, 0.85);
 }
 
@@ -205,3 +208,13 @@ body{
     width: 2.6vw;
     background-color: black;
 }
+
+body, html{
+    height: 100%;
+}
+
+/* @media (min-width: 640px){
+    html, body{
+        height: 100%;
+    }
+} */
