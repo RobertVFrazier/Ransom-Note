@@ -33,8 +33,8 @@ const generateHtml={
         // console.log('In the splashHtml method.');
         let pageSplashHtml=`
         <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button></div>
-            <div class='buttonBox'><button type='button' id='js-splashUserButton' class='js-button js-userButton' autofocus></button></div>
+            <div class='buttonBox'><button type='button' class='js-button js-instructionsButton'>Read Instructions</button></div>
+            <div class='buttonBox'><button type='button' class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -103,10 +103,10 @@ const generateHtml={
                         <span class='countDown js-countDown5'>${STORE.widths[4]}</span>
                     </div>
                     <div class='buttonBox'>
-                        <br/><button type='button' id='js-instructionsButton' class='js-button js-instructionsButton'>Read Instructions</button>
+                        <br/><button type='button' class='js-button js-instructionsButton'>Read Instructions</button>
                     </div>
                     <div class='buttonBox'>
-                        <br/><button type='button' id='js-mainUserButton' class='js-button js-userButton'></button>
+                        <br/><button type='button' class='js-button js-userButton'></button>
                     </div>
                 </form>
             </div>
@@ -134,7 +134,7 @@ const generateHtml={
                 <button type='button' id='js-distortButton' class='js-button js-distortButton'>Distort</button>
                 <button type='button' id='js-undistortButton' class='js-button js-undistortButton'>Undistort</button>
             </div>
-            <div class='buttonBox'><button type='button' id='js-ransomeUserButton' class='js-button js-userButton'></button></div>
+            <div class='buttonBox'><button type='button' class='js-button js-userButton'></button></div>
         </form>
         `;
         
