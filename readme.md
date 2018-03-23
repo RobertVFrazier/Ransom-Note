@@ -11,27 +11,27 @@ Let the user make fun and interesting word art from any short message they quote
 
 Splash screen:
 
-![splash screen](docs\ScreenShot001.jpg "Splash screen")
+![splash screen](docs/ScreenShot001.jpg "Splash screen")
 
 Instructions screen:
 
-![instructions screen](docs\ScreenShot002.jpg "Instructions screen")
+![instructions screen](docs/ScreenShot002.jpg "Instructions screen")
 
 Main screen:
 
-![main screen](docs\ScreenShot003.jpg "Main screen")
+![main screen](docs/ScreenShot003.jpg "Main screen")
 
 Ransom Note screen:
 
-![ransom note  screen](docs\ScreenShot004.jpg "Ransom Note screen")
+![ransom note  screen](docs/ScreenShot004.jpg "Ransom Note screen")
 
 Distort applied:
 
-![distort applied](docs\ScreenShot005.jpg "Distort applied")
+![distort applied](docs/ScreenShot005.jpg "Distort applied")
 
 One letter changed:
 
-![one letter changed](docs\ScreenShot006.jpg "One letter changed")
+![one letter changed](docs/ScreenShot006.jpg "One letter changed")
 
 ## Created with:
 
