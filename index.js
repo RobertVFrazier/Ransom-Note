@@ -33,8 +33,10 @@ const generateHtml={
         // console.log('In the splashHtml method.');
         let pageSplashHtml=`
         <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' class='js-button js-instructionsButton'>Read Instructions</button></div>
-            <div class='buttonBox'><button type='button' class='js-button js-userButton' autofocus></button></div>
+            <div class='buttonBox'><button type='button' class='js-button `
+                +`js-instructionsButton'>Read Instructions</button></div>
+            <div class='buttonBox'><button type='button' class='js-button `
+                +`js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -47,16 +49,27 @@ const generateHtml={
         let pageInstructionsHtml=`
         <div class='instructionsBox'>
         <h1>Welcome to Ransom Note!</h1>
-        <p>This app takes your text and converts it to a series of photos of letters, numerals, and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
-        <p>In the text input page (click the Start button), there are five text fields. Enter your text in any or all of them, then click Continue. A new screen will appear with your text turned to photos.</p>
-        <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as characters. There is a counter next to each line to track how many more characters will fit.</p>
-        <p>If you don't like the random photos selected (especially if you got a letter you didn't type), you can change them. Click Shuffle to change all of the photos at once, or click on a single photo to change it.</p>
-        <p>Click Distort to randomly vary the size and tilt of the pictures. Undistort restores them. Click the Back button to return to the text entry screen.</p><br />
+        <p>This app takes your text and converts it to a series of photos of letters, numerals, `
+            +`and some punctuation: period, question, exclamation, comma, apostrophe, hyphen, ampersand.</p>
+        <p>In the text input page (click the Start button), there are five text fields. Enter your `
+            +`text in any or all of them, then click Continue. A new screen will appear with your `
+            +`text turned to photos.</p>
+        <p>Keep your message short! Each line can hold only 18 characters. Spaces are half as wide as `
+            +`characters. There is a counter next to each line to track how many more characters will fit.</p>
+        <p>If you don't like the random photos selected (especially if you got a letter you didn't `
+            +`type), you can change them. Click Shuffle to change all of the photos at once, or click `
+            +`on a single photo to change it.</p>
+        <p>Click Distort to randomly vary the size and tilt of the pictures. Undistort restores them. `
+            +`Click the Back button to return to the text entry screen.</p><br />
         
-        <p class=techNote>The photos come from flickr.com, specifically from these three groups: One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's 'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, without looking at his code, but with a better user interface and some improvements.</p>
+        <p class=techNote>The photos come from flickr.com, specifically from these three groups: `
+            +`One Letter, One Number, and Punctuation. I got the idea for this app from Erik Kastner's `
+            +`'Spell with flickr' (http://metaatem.net/words/). My goal was to recreate the same function, `
+            +`without looking at his code, but with a better user interface and some improvements.</p>
         </div>
         <form class='buttonForm'>
-            <div class='buttonBox'><button type='button' id='js-instructionsUserButton' class='js-button js-userButton' autofocus></button></div>
+            <div class='buttonBox'><button type='button' id='js-instructionsUserButton' `
+                +`class='js-button js-userButton' autofocus></button></div>
         </form>
         `;
         
@@ -275,9 +288,11 @@ const listeners={
         // console.log('In the handleCharacterPicClicks method.');
         $('.js-pageViewRansomNoteHtml').on('click', '.js-charPic', function(event){
             let targetCharacterPic=$(event.currentTarget);
-            let charPos=targetCharacterPic[0].attributes.pos.value;           // attribute 'pos' is user-defined, set to 0 - 42
+            let charPos=targetCharacterPic[0].attributes.pos.value;             // attribute 'pos' is user-defined, 
+                                                                                // set to 0 - 42
             let currPicUrl=targetCharacterPic[0].src;
-            let currCharIndex=STORE.apiPhotos[charPos].indexOf(currPicUrl);   // Get the index from the URL of the image clicked.
+            let currCharIndex=STORE.apiPhotos[charPos].indexOf(currPicUrl);     // Get the index from the URL of the 
+                                                                                // image clicked.
             let currCharArrayLen=STORE.apiPhotos[charPos].length;
             let photoNum=currCharIndex===currCharArrayLen-1 ? 0 : currCharIndex+1;
             let newPicUrl=STORE.apiPhotos[charPos][photoNum];
@@ -312,7 +327,8 @@ const getFlickrPics={
 
     findCharacterCounts: function(){
         // console.log('In the findCharacterCounts method.');
-        let fullText=(STORE.lines[0].trim()+' '+STORE.lines[1].trim()+' '+STORE.lines[2].trim()+' '+STORE.lines[3].trim()+' '+STORE.lines[4]).trim().toUpperCase();
+        let fullText=(STORE.lines[0].trim()+' '+STORE.lines[1].trim()+' '+STORE.lines[2].trim()+' '
+            +STORE.lines[3].trim()+' '+STORE.lines[4]).trim().toUpperCase();
         let strLen=fullText.trim().length;
         let baseCount=100;
         let extraCount=25;
@@ -369,7 +385,9 @@ const getFlickrPics={
                 target=punctArray[i-36];
             }
             if(STORE.charCount[i]!==0){
-                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=${groupId}&per_page=${STORE.charCount[i]}&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${target}`,function(jsonTemp){
+                $.getJSON(`https://api.flickr.com/services/rest/?&method=flickr.photos.search`
+                    +`&api_key=720381d57c2c0a9dd85eb107da8cabce&group_id=${groupId}&per_page=${STORE.charCount[i]}`
+                    +`&format=json&nojsoncallback=1&extras=url_sq&tag_mode=all&tags=${target}`,function(jsonTemp){
                     // console.log('In the makeApiCalls json callback method.');
                     let resultList=[];
                     for(let j=0; j<Math.min(jsonTemp.photos.perpage,jsonTemp.photos.total); j++){
@@ -419,52 +437,65 @@ const getFlickrPics={
             if(asciiCode>=48 && asciiCode<=57){           // Number
                 if(typeof STORE.apiPhotos[asciiCode-48]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-48].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-48][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-48}' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-48][randomNum]}' `
+                        +`alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' `
+                        +`pos='${asciiCode-48}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=65 && asciiCode<=90){     // LETTER
                 if(typeof STORE.apiPhotos[asciiCode-55]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-55].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-55][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-55}' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-55][randomNum]}' `
+                        +`alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' `
+                        +`pos='${asciiCode-55}' class='js-charPic'>`;
                 };
             }else if(asciiCode>=97 && asciiCode<=122){     // letter
                 if(typeof STORE.apiPhotos[asciiCode-87]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[asciiCode-87].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-87][randomNum]}' alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' pos='${asciiCode-87}' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[asciiCode-87][randomNum]}' `
+                        +`alt='${String.fromCharCode(asciiCode)}' role='button' aria-pressed='false' `
+                        +`pos='${asciiCode-87}' class='js-charPic'>`;
                 };
             }else if(asciiCode===46){
                 if(typeof STORE.apiPhotos[36]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[36].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[36][randomNum]}' alt='Period' role='button' aria-pressed='false' pos='36' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[36][randomNum]}' alt='Period' `
+                        +`role='button' aria-pressed='false' pos='36' class='js-charPic'>`;
                 };
             }else if(asciiCode===63){
                 if(typeof STORE.apiPhotos[37]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[37].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[37][randomNum]}' alt='Question' role='button' aria-pressed='false' pos='37' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[37][randomNum]}' alt='Question' `
+                        +`role='button' aria-pressed='false' pos='37' class='js-charPic'>`;
                 };
             }else if(asciiCode===33){
                 if(typeof STORE.apiPhotos[38]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[38].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' role='button' aria-pressed='false' pos='38' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[38][randomNum]}' alt='Exclamation' `
+                        +`role='button' aria-pressed='false' pos='38' class='js-charPic'>`;
                 };
             }else if(asciiCode===44){
                 if(typeof STORE.apiPhotos[39]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[39].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' role='button' aria-pressed='false' pos='39' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[39][randomNum]}' alt='Comma' `
+                        +`role='button' aria-pressed='false' pos='39' class='js-charPic'>`;
                 };
             }else if(asciiCode===39){
                 if(typeof STORE.apiPhotos[40]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[40].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' role='button' aria-pressed='false' pos='40' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[40][randomNum]}' alt='Apostrophe' `
+                        +`role='button' aria-pressed='false' pos='40' class='js-charPic'>`;
                 };
             }else if(asciiCode===45){
                 if(typeof STORE.apiPhotos[41]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[41].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' role='button' aria-pressed='false' pos='41' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[41][randomNum]}' alt='Hyphen' `
+                        +`role='button' aria-pressed='false' pos='41' class='js-charPic'>`;
                 };
             }else if(asciiCode===38){
                 if(typeof STORE.apiPhotos[42]!='undefined'){
                     randomNum=getFlickrPics.pickNum(0,STORE.apiPhotos[42].length-1);
-                    picLinks+=`<input type='image' src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' role='button' aria-pressed='false' pos='42' class='js-charPic'>`;
+                    picLinks+=`<input type='image' src='${STORE.apiPhotos[42][randomNum]}' alt='Ampersand' `
+                        +`role='button' aria-pressed='false' pos='42' class='js-charPic'>`;
                 };
             }else if(asciiCode===32){                     // Space
                 picLinks+=`<span class='space'> </span>`;
